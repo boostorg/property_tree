@@ -1,5 +1,6 @@
 // ----------------------------------------------------------------------------
 // Copyright (C) 2002-2006 Marcin Kalicinski
+// Copyright (C) 2013 Sebastian Redl
 //
 // Distributed under the Boost Software License, Version 1.0. 
 // (See accompanying file LICENSE_1_0.txt or copy at 
@@ -35,7 +36,6 @@ namespace boost { namespace property_tree { namespace xml_parser
                            const xml_writer_settings<Ch> & settings
                            )
     {
-        typedef typename std::basic_string<Ch> Str;
         if (separate_line)
             write_xml_indent(stream,indent,settings);
         stream << Ch('<') << Ch('!') << Ch('-') << Ch('-');
@@ -69,7 +69,6 @@ namespace boost { namespace property_tree { namespace xml_parser
     {
 
         typedef typename Ptree::key_type::value_type Ch;
-        typedef typename std::basic_string<Ch> Str;
         typedef typename Ptree::const_iterator It;
 
         bool want_pretty = settings.indent_count > 0;
