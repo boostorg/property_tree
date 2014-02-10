@@ -113,7 +113,7 @@ namespace boost { namespace property_tree { namespace json_parser
         {
             context &c;
             a_char(context &c): c(c) { }
-            void operator()(It b, It e) const
+            void operator()(It b, It) const
             {
                 c.string += *b;
             }
