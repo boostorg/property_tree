@@ -94,7 +94,8 @@ namespace boost { namespace property_tree { namespace json_parser
                     stream << Ch(',');
                 if (pretty) stream << Ch('\n');
             }
-            stream << Str(4 * indent, Ch(' ')) << Ch(']');
+            if (pretty) stream << Str(4 * indent, Ch(' '));
+            stream << Ch(']');
 
         }
         else
@@ -107,12 +108,7 @@ namespace boost { namespace property_tree { namespace json_parser
             {
                 if (pretty) stream << Str(4 * (indent + 1), Ch(' '));
                 stream << Ch('"') << create_escapes(it->first) << Ch('"') << Ch(':');
-                if (pretty) {
-                    if (it->second.empty())
-                        stream << Ch(' ');
-                    else
-                        stream << Ch('\n') << Str(4 * (indent + 1), Ch(' '));
-                }
+                if (pretty) stream << Ch(' ');
                 write_json_helper(stream, it->second, indent + 1, pretty);
                 if (boost::next(it) != pt.end())
                     stream << Ch(',');

@@ -22,6 +22,7 @@
 #include <boost/property_tree/detail/ptree_utils.hpp>
 #include <fstream>
 #include <cstring>
+#include <sstream>
 
 template<class Ptree>
 typename Ptree::size_type total_size(const Ptree &pt)
@@ -193,16 +194,16 @@ void generic_parser_test_error(ReadFunc rf,
     //BOOST_CHECK(Ptree::debug_get_instances_count() == 0);
 
     {
-    
+
         // Create ptree as a copy of test ptree (to test if read failure does not damage ptree)
         Ptree pt(get_test_ptree<Ptree>());
         try
         {
-            generic_parser_test<Ptree, ReadFunc, WriteFunc>(pt, rf, wf, 
-                                                            test_data_1, test_data_2, 
+            generic_parser_test<Ptree, ReadFunc, WriteFunc>(pt, rf, wf,
+                                                            test_data_1, test_data_2,
                                                             filename_1, filename_2, filename_out);
             BOOST_ERROR("No required exception thrown");
-        } 
+        }
         catch (Error &e)
         {
             BOOST_CHECK(e.line() == expected_error_line);           // Test line number
@@ -219,6 +220,28 @@ void generic_parser_test_error(ReadFunc rf,
     // Test for leaks
     //BOOST_CHECK(Ptree::debug_get_instances_count() == 0);
 
+}
+
+template <typename Ch> std::basic_ostream<Ch>& errstream();
+template <> inline
+std::basic_ostream<char>& errstream() { return std::cerr; }
+template <> inline
+std::basic_ostream<wchar_t>& errstream() { return std::wcerr; }
+
+template <class Ptree, class ReadFunc, class WriteFunc>
+void check_exact_roundtrip(ReadFunc rf, WriteFunc wf, const char *test_data) {
+    std::cerr << "(progress) Starting exact roundtrip test with test data:\n"
+              << test_data;
+    using namespace boost::property_tree;
+    typedef typename Ptree::key_type::value_type Ch;
+    std::basic_string<Ch> native_test_data = detail::widen<Ch>(test_data);
+
+    std::basic_istringstream<Ch> in_stream(native_test_data);
+    std::basic_ostringstream<Ch> out_stream;
+    Ptree tree;
+    rf(in_stream, tree);
+    wf(out_stream, tree);
+    BOOST_CHECK(native_test_data == out_stream.str());
 }
 
 #endif
