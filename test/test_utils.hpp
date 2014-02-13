@@ -225,13 +225,15 @@ void generic_parser_test_error(ReadFunc rf,
 template <typename Ch> std::basic_ostream<Ch>& errstream();
 template <> inline
 std::basic_ostream<char>& errstream() { return std::cerr; }
+#ifndef BOOST_NO_CWCHAR
 template <> inline
 std::basic_ostream<wchar_t>& errstream() { return std::wcerr; }
+#endif
 
 template <class Ptree, class ReadFunc, class WriteFunc>
 void check_exact_roundtrip(ReadFunc rf, WriteFunc wf, const char *test_data) {
     std::cerr << "(progress) Starting exact roundtrip test with test data:\n"
-              << test_data;
+              << test_data << "\n-----\n";
     using namespace boost::property_tree;
     typedef typename Ptree::key_type::value_type Ch;
     std::basic_string<Ch> native_test_data = detail::widen<Ch>(test_data);
@@ -241,6 +243,9 @@ void check_exact_roundtrip(ReadFunc rf, WriteFunc wf, const char *test_data) {
     Ptree tree;
     rf(in_stream, tree);
     wf(out_stream, tree);
+    std::cerr << "(progress) Roundtripped data:\n";
+    errstream<Ch>() << out_stream.str();
+    std::cerr << "\n-----\n";
     BOOST_CHECK(native_test_data == out_stream.str());
 }
 
