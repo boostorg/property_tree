@@ -67,6 +67,8 @@ namespace boost { namespace property_tree { namespace xml_parser
                     case Ch('&'): r += detail::widen<Ch>("&amp;"); break;
                     case Ch('"'): r += detail::widen<Ch>("&quot;"); break;
                     case Ch('\''): r += detail::widen<Ch>("&apos;"); break;
+                    case Ch('\t'): r += detail::widen<Ch>("&#9;"); break;
+                    case Ch('\n'): r += detail::widen<Ch>("&#10;"); break;
                     default: r += *it; break;
                 }
             }
