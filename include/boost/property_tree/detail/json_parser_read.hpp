@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------------
 // Copyright (C) 2002-2006 Marcin Kalicinski
 //
-// Distributed under the Boost Software License, Version 1.0. 
-// (See accompanying file LICENSE_1_0.txt or copy at 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 // For more information, see www.boost.org
@@ -28,7 +28,7 @@ namespace boost { namespace property_tree { namespace json_parser
 
     ///////////////////////////////////////////////////////////////////////
     // Json parser context
-        
+
     template<class Ptree>
     struct context
     {
@@ -36,7 +36,7 @@ namespace boost { namespace property_tree { namespace json_parser
         typedef typename Ptree::key_type::value_type Ch;
         typedef std::basic_string<Ch> Str;
         typedef typename std::vector<Ch>::iterator It;
-        
+
         Str string;
         Str name;
         Ptree root;
@@ -59,7 +59,7 @@ namespace boost { namespace property_tree { namespace json_parser
                 }
             }
         };
-        
+
         struct a_object_e
         {
             context &c;
@@ -113,7 +113,7 @@ namespace boost { namespace property_tree { namespace json_parser
         {
             context &c;
             a_char(context &c): c(c) { }
-            void operator()(It b, It e) const
+            void operator()(It b, It) const
             {
                 c.string += *b;
             }
@@ -160,16 +160,16 @@ namespace boost { namespace property_tree { namespace json_parser
     struct json_grammar :
         public boost::spirit::classic::grammar<json_grammar<Ptree> >
     {
-        
+
         typedef context<Ptree> Context;
         typedef typename Ptree::key_type::value_type Ch;
 
         mutable Context c;
-        
+
         template<class Scanner>
         struct definition
         {
-            
+
             boost::spirit::classic::rule<Scanner>
                 root, object, member, array, item, value, string, number;
             boost::spirit::classic::rule<
@@ -195,47 +195,47 @@ namespace boost { namespace property_tree { namespace json_parser
                 assertion<std::string> expect_escape("invalid escape sequence");
 
                 // JSON grammar rules
-                root 
-                    =   expect_root(object | array) 
+                root
+                    =   expect_root(object | array)
                         >> expect_eoi(end_p)
                         ;
-                
-                object 
+
+                object
                     =   ch_p('{')[typename Context::a_object_s(self.c)]
-                        >> (ch_p('}')[typename Context::a_object_e(self.c)] 
+                        >> (ch_p('}')[typename Context::a_object_e(self.c)]
                            | (list_p(member, ch_p(','))
                               >> expect_objclose(ch_p('}')[typename Context::a_object_e(self.c)])
                              )
                            )
                         ;
-                
-                member 
-                    =   expect_name(string[typename Context::a_name(self.c)]) 
-                        >> expect_colon(ch_p(':')) 
+
+                member
+                    =   expect_name(string[typename Context::a_name(self.c)])
+                        >> expect_colon(ch_p(':'))
                         >> expect_value(value)
                         ;
-                
-                array 
+
+                array
                     =   ch_p('[')[typename Context::a_object_s(self.c)]
-                        >> (ch_p(']')[typename Context::a_object_e(self.c)] 
+                        >> (ch_p(']')[typename Context::a_object_e(self.c)]
                             | (list_p(item, ch_p(','))
                                >> expect_arrclose(ch_p(']')[typename Context::a_object_e(self.c)])
                               )
                            )
                     ;
 
-                item 
+                item
                     =   expect_value(value)
                         ;
 
-                value 
-                    =   string[typename Context::a_string_val(self.c)] 
+                value
+                    =   string[typename Context::a_string_val(self.c)]
                         | (number | str_p("true") | "false" | "null")[typename Context::a_literal_val(self.c)]
-                        | object 
+                        | object
                         | array
                         ;
-                
-                number 
+
+                number
                     =   !ch_p("-") >>
                         (ch_p("0") | (range_p(Ch('1'), Ch('9')) >> *digit_p)) >>
                         !(ch_p(".") >> +digit_p) >>
@@ -305,14 +305,14 @@ namespace boost { namespace property_tree { namespace json_parser
                           std::istreambuf_iterator<Ch>());
         if (!stream.good())
             BOOST_PROPERTY_TREE_THROW(json_parser_error("read error", filename, 0));
-        
+
         // Prepare grammar
         json_grammar<Ptree> g;
 
         // Parse
         try
         {
-            parse_info<It> pi = parse(v.begin(), v.end(), g, 
+            parse_info<It> pi = parse(v.begin(), v.end(), g,
                                       space_p | comment_p("//") | comment_p("/*", "*/"));
             if (!pi.hit || !pi.full)
                 BOOST_PROPERTY_TREE_THROW((parser_error<std::string, It>(v.begin(), "syntax error")));
