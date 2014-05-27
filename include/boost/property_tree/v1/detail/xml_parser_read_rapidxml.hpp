@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_READ_RAPIDXML_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_READ_RAPIDXML_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <boost/property_tree/v1/detail/xml_parser_error.hpp>
 #include <boost/property_tree/v1/detail/xml_parser_flags.hpp>
@@ -17,8 +18,7 @@
 #include <boost/property_tree/v1/detail/rapidxml.hpp>
 #include <vector>
 
-namespace boost { namespace property_tree { namespace xml_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace xml_parser {
 
     template<class Ptree, class Ch>
     void read_xml_node(detail::rapidxml::xml_node<Ch> *node,
@@ -142,6 +142,6 @@ namespace boost { namespace property_tree { namespace xml_parser
         }
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_PTREE_UTILS_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_PTREE_UTILS_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/limits.hpp>
 #include <boost/type_traits/integral_constant.hpp>
 #include <boost/mpl/has_xxx.hpp>
@@ -18,8 +19,7 @@
 #include <algorithm>
 #include <locale>
 
-namespace boost { namespace property_tree { namespace detail
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace detail {
 
     template<class T>
     struct less_nocase
@@ -101,6 +101,6 @@ namespace boost { namespace property_tree { namespace detail
             return s;
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

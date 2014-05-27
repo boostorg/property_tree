@@ -11,6 +11,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_INI_PARSER_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_INI_PARSER_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <boost/property_tree/v1/detail/ptree_utils.hpp>
 #include <boost/property_tree/v1/detail/file_parser_error.hpp>
@@ -20,8 +21,7 @@
 #include <stdexcept>
 #include <locale>
 
-namespace boost { namespace property_tree { namespace ini_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace ini_parser {
 
     /**
      * Determines whether the @c flags are valid for use with the ini_parser.
@@ -298,13 +298,12 @@ namespace boost { namespace property_tree { namespace ini_parser
         }
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
     using ini_parser::ini_parser_error;
     using ini_parser::read_ini;
     using ini_parser::write_ini;
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

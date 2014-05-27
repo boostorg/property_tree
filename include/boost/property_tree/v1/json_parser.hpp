@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_JSON_PARSER_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_JSON_PARSER_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <boost/property_tree/v1/detail/json_parser_read.hpp>
 #include <boost/property_tree/v1/detail/json_parser_write.hpp>
@@ -19,8 +20,7 @@
 #include <string>
 #include <locale>
 
-namespace boost { namespace property_tree { namespace json_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace json_parser {
 
     /**
      * Read JSON from a the given stream and translate it to a property tree.
@@ -127,13 +127,12 @@ namespace boost { namespace property_tree { namespace json_parser
         write_json_internal(stream, pt, filename, pretty);
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
     using json_parser::read_json;
     using json_parser::write_json;
     using json_parser::json_parser_error;
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

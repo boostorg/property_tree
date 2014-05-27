@@ -12,14 +12,14 @@
 #ifndef BOOST_PROPERTY_TREE_V1_EXCEPTIONS_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_EXCEPTIONS_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree_fwd.hpp>
 
 #include <boost/any.hpp>
 #include <string>
 #include <stdexcept>
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
 
     /// Base class for all property tree errors. Derives from
     /// @c std::runtime_error. Call member function @c what to get human
@@ -79,7 +79,7 @@ namespace boost { namespace property_tree
         boost::any m_path;
     };
 
-}}
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #include <boost/property_tree/v1/detail/exception_implementation.hpp>
 

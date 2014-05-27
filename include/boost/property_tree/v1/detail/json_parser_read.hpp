@@ -12,6 +12,7 @@
 
 //#define BOOST_SPIRIT_DEBUG
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <boost/property_tree/v1/detail/ptree_utils.hpp>
 #include <boost/property_tree/v1/detail/json_parser_error.hpp>
@@ -23,8 +24,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace boost { namespace property_tree { namespace json_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace json_parser {
 
     ///////////////////////////////////////////////////////////////////////
     // Json parser context
@@ -327,6 +327,6 @@ namespace boost { namespace property_tree { namespace json_parser
 
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

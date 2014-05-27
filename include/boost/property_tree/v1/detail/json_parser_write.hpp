@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_WRITE_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_WRITE_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <boost/next_prior.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
@@ -17,8 +18,7 @@
 #include <ostream>
 #include <iomanip>
 
-namespace boost { namespace property_tree { namespace json_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace json_parser {
 
     // Create necessary escape sequences from illegal characters
     template<class Ch>
@@ -162,6 +162,6 @@ namespace boost { namespace property_tree { namespace json_parser
             BOOST_PROPERTY_TREE_THROW(json_parser_error("write error", filename, 0));
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

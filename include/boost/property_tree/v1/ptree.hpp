@@ -12,6 +12,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_PTREE_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_PTREE_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree_fwd.hpp>
 #include <boost/property_tree/v1/string_path.hpp>
 #include <boost/property_tree/v1/stream_translator.hpp>
@@ -28,8 +29,7 @@
 #include <boost/optional.hpp>
 #include <utility>                  // for std::pair
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
 
     /**
      * Property tree main structure. A property tree is a hierarchical data
@@ -511,7 +511,7 @@ namespace boost { namespace property_tree
         friend class const_reverse_iterator;
     };
 
-}}
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #include <boost/property_tree/v1/detail/ptree_implementation.hpp>
 

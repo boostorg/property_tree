@@ -11,6 +11,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_STRING_PATH_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_STRING_PATH_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree_fwd.hpp>
 #include <boost/property_tree/v1/id_translator.hpp>
 #include <boost/property_tree/v1/exceptions.hpp>
@@ -25,8 +26,7 @@
 #include <string>
 #include <iterator>
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
     namespace detail
     {
         template <typename Sequence, typename Iterator>
@@ -273,6 +273,6 @@ namespace boost { namespace property_tree
         return t;
     }
 
-}}
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

@@ -11,11 +11,11 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_WRITER_SETTINGS_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_WRITER_SETTINGS_HPP_INCLUDED
 
-#include <string>
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/detail/ptree_utils.hpp>
+#include <string>
 
-namespace boost { namespace property_tree { namespace xml_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace xml_parser {
     
     // Naively convert narrow string to another character type
     template<class Ch>
@@ -57,6 +57,6 @@ namespace boost { namespace property_tree { namespace xml_parser
         return xml_writer_settings<Ch>(indent_char, indent_count, encoding);
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

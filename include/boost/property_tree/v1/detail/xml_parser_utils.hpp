@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_UTILS_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_UTILS_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/detail/ptree_utils.hpp>
 #include <boost/property_tree/v1/detail/xml_parser_error.hpp>
 #include <boost/property_tree/v1/detail/xml_parser_writer_settings.hpp>
@@ -17,8 +18,7 @@
 #include <algorithm>
 #include <locale>
 
-namespace boost { namespace property_tree { namespace xml_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace xml_parser {
 
     template<class Ch>
     std::basic_string<Ch> condense(const std::basic_string<Ch> &s)
@@ -133,6 +133,6 @@ namespace boost { namespace property_tree { namespace xml_parser
         return s;
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

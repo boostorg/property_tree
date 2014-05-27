@@ -10,11 +10,11 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_ERROR_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_ERROR_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/detail/file_parser_error.hpp>
 #include <string>
 
-namespace boost { namespace property_tree { namespace json_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace json_parser {
 
     //! Json parser error
     class json_parser_error: public file_parser_error
@@ -28,6 +28,6 @@ namespace boost { namespace property_tree { namespace json_parser
         }
     };
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

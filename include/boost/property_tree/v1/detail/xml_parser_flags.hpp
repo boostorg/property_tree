@@ -10,8 +10,9 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_FLAGS_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_FLAGS_HPP_INCLUDED
 
-namespace boost { namespace property_tree { namespace xml_parser
-{
+#include <boost/property_tree/version.hpp>
+
+BOOST_PROPERTY_TREE_OPENNS(1) namespace xml_parser {
 
     /// Text elements should be put in separate keys,
     /// not concatenated in parent data.
@@ -26,6 +27,6 @@ namespace boost { namespace property_tree { namespace xml_parser
         return (flags & ~(no_concat_text | no_comments | trim_whitespace)) == 0;
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

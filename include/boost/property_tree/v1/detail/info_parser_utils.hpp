@@ -10,9 +10,10 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_CHCONV_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_CHCONV_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <string>
 
-namespace boost { namespace property_tree { namespace info_parser
+BOOST_PROPERTY_TREE_OPENNS(1) namespace info_parser
 {
 
     template<class ChDest, class ChSrc>
@@ -27,6 +28,6 @@ namespace boost { namespace property_tree { namespace info_parser
         return result;
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

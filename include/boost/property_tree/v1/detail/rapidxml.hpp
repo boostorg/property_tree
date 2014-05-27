@@ -12,6 +12,7 @@
 
 //! \file rapidxml.hpp This file contains rapidxml parser and DOM implementation
 
+#include <boost/property_tree/version.hpp>
 #include <boost/assert.hpp>
 #include <cstdlib>      // For std::size_t
 #include <new>          // For placement new
@@ -28,20 +29,22 @@
     
 #include <exception>    // For std::exception
 
-#define BOOST_PROPERTY_TREE_RAPIDXML_PARSE_ERROR(what, where) throw parse_error(what, where)
+#define BOOST_PROPERTY_TREE_RAPIDXML_PARSE_ERROR(what, where) \
+    throw parse_error(what, where)
 
-namespace boost { namespace property_tree { namespace detail {namespace rapidxml
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace detail { namespace rapidxml {
 
-    //! Parse error exception. 
-    //! This exception is thrown by the parser when an error occurs. 
-    //! Use what() function to get human-readable error message. 
-    //! Use where() function to get a pointer to position within source text where error was detected.
+    //! Parse error exception.
+    //! This exception is thrown by the parser when an error occurs.
+    //! Use what() function to get human-readable error message.
+    //! Use where() function to get a pointer to position within source text
+    //! where error was detected.
     //! <br><br>
-    //! If throwing exceptions by the parser is undesirable, 
-    //! it can be disabled by defining RAPIDXML_NO_EXCEPTIONS macro before rapidxml.hpp is included.
-    //! This will cause the parser to call rapidxml::parse_error_handler() function instead of throwing an exception.
-    //! This function must be defined by the user.
+    //! If throwing exceptions by the parser is undesirable, it can be disabled
+    //! by defining RAPIDXML_NO_EXCEPTIONS macro before rapidxml.hpp is
+    //! included. This will cause the parser to call
+    //! rapidxml::parse_error_handler() function instead of throwing an
+    //! exception. This function must be defined by the user.
     //! <br><br>
     //! This class derives from <code>std::exception</code> class.
     class parse_error: public std::exception
@@ -78,7 +81,6 @@ namespace boost { namespace property_tree { namespace detail {namespace rapidxml
         void *m_where;
 
     };
-}}}}
 
 ///////////////////////////////////////////////////////////////////////////
 // Pool sizes
@@ -105,8 +107,6 @@ namespace boost { namespace property_tree { namespace detail {namespace rapidxml
     #define BOOST_PROPERTY_TREE_RAPIDXML_ALIGNMENT sizeof(void *)
 #endif
 
-namespace boost { namespace property_tree { namespace detail {namespace rapidxml
-{
     // Forward declarations
     template<class Ch> class xml_node;
     template<class Ch> class xml_attribute;
@@ -2582,7 +2582,7 @@ namespace boost { namespace property_tree { namespace detail {namespace rapidxml
     }
     //! \endcond
 
-}}}}
+}} BOOST_PROPERTY_TREE_CLOSENS()
 
 // Undefine internal macros
 #undef BOOST_PROPERTY_TREE_RAPIDXML_PARSE_ERROR

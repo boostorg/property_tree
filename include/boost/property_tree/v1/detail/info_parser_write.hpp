@@ -10,12 +10,13 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_WRITE_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_WRITE_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include "boost/property_tree/v1/ptree.hpp"
 #include "boost/property_tree/v1/detail/info_parser_utils.hpp"
 #include <string>
 
-namespace boost { namespace property_tree { namespace info_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace info_parser {
+
     template<class Ch>
     void write_info_indent(std::basic_ostream<Ch> &stream,
           int indent,
@@ -142,6 +143,6 @@ namespace boost { namespace property_tree { namespace info_parser
             BOOST_PROPERTY_TREE_THROW(info_parser_error("write error", filename, 0));
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

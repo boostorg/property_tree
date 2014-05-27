@@ -11,6 +11,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_STREAM_TRANSLATOR_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_STREAM_TRANSLATOR_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree_fwd.hpp>
 
 #include <boost/optional.hpp>
@@ -23,8 +24,7 @@
 #include <locale>
 #include <limits>
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
 
     template <typename Ch, typename Traits, typename E, typename Enabler = void>
     struct customize_stream
@@ -218,6 +218,6 @@ namespace boost { namespace property_tree
         typedef stream_translator<Ch, Traits, Alloc, E> type;
     };
 
-}}
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

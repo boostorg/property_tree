@@ -11,6 +11,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_PTREE_FWD_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_PTREE_FWD_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/config.hpp>
 #include <boost/optional/optional_fwd.hpp>
 #include <boost/throw_exception.hpp>
@@ -18,8 +19,7 @@
 #include <memory>               // for std::allocator
 #include <string>
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
     namespace detail {
         template <typename T> struct less_nocase;
     }
@@ -132,7 +132,7 @@ namespace boost { namespace property_tree
     void swap(basic_ptree<K, D, C> &pt1,
               basic_ptree<K, D, C> &pt2);
 
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 
 #if !defined(BOOST_PROPERTY_TREE_DOXYGEN_INVOKED)

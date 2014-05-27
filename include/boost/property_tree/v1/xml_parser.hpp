@@ -11,6 +11,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_XML_PARSER_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_XML_PARSER_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <boost/property_tree/v1/detail/xml_parser_write.hpp>
 #include <boost/property_tree/v1/detail/xml_parser_error.hpp>
@@ -22,8 +23,7 @@
 #include <string>
 #include <locale>
 
-namespace boost { namespace property_tree { namespace xml_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace xml_parser {
 
     /**
      * Reads XML from an input stream and translates it to property tree.
@@ -138,16 +138,15 @@ namespace boost { namespace property_tree { namespace xml_parser
         write_xml_internal(stream, pt, filename, settings);
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
     using xml_parser::read_xml;
     using xml_parser::write_xml;
     using xml_parser::xml_parser_error;
 
     using xml_parser::xml_writer_settings;
     using xml_parser::xml_writer_make_settings;
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

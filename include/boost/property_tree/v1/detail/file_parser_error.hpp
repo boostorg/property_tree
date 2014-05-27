@@ -10,11 +10,11 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_FILE_PARSER_ERROR_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_FILE_PARSER_ERROR_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <string>
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
 
     //! File parse error
     class file_parser_error: public ptree_error
@@ -83,6 +83,6 @@ namespace boost { namespace property_tree
 
     };
 
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

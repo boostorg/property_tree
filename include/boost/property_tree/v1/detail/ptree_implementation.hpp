@@ -11,6 +11,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_PTREE_IMPLEMENTATION_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_PTREE_IMPLEMENTATION_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/iterator/reverse_iterator.hpp>
 #include <boost/assert.hpp>
@@ -24,8 +25,8 @@
 #define BOOST_PROPERTY_TREE_PAIR_BUG
 #endif
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
+
     template <class K, class D, class C>
     struct basic_ptree<K, D, C>::subs
     {
@@ -905,7 +906,7 @@ namespace boost { namespace property_tree
         pt1.swap(pt2);
     }
 
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #if defined(BOOST_PROPERTY_TREE_PAIR_BUG)
 #undef BOOST_PROPERTY_TREE_PAIR_BUG

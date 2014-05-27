@@ -11,13 +11,13 @@
 #ifndef BOOST_PROPERTY_TREE_V1_ID_TRANSLATOR_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_ID_TRANSLATOR_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree_fwd.hpp>
 
 #include <boost/optional.hpp>
 #include <string>
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
 
     /// Simple implementation of the Translator concept. It does no translation.
     template <typename T>
@@ -46,6 +46,6 @@ namespace boost { namespace property_tree
         typedef id_translator< std::basic_string<Ch, Traits, Alloc> > type;
     };
 
-}}
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

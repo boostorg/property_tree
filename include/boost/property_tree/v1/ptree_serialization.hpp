@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_PTREE_SERIALIZATION_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_PTREE_SERIALIZATION_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 
 #include <boost/serialization/nvp.hpp>
@@ -18,8 +19,7 @@
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/utility.hpp>
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
 
     ///////////////////////////////////////////////////////////////////////////
     // boost::serialization support
@@ -97,6 +97,6 @@ namespace boost { namespace property_tree
         split_free(ar, t, file_version);
     }
 
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

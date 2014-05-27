@@ -11,8 +11,9 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_EXCEPTIONS_IMPLEMENTATION_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_EXCEPTIONS_IMPLEMENTATION_HPP_INCLUDED
 
-namespace boost { namespace property_tree
-{
+#include <boost/property_tree/version.hpp>
+
+BOOST_PROPERTY_TREE_OPENNS(1)
 
     namespace detail
     {
@@ -78,6 +79,6 @@ namespace boost { namespace property_tree
         return boost::any_cast<P>(m_path);
     }
 
-}}
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

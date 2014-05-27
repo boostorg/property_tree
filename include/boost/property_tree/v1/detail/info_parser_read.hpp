@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_READ_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_READ_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include "boost/property_tree/v1/ptree.hpp"
 #include "boost/property_tree/v1/detail/info_parser_error.hpp"
 #include "boost/property_tree/v1/detail/info_parser_utils.hpp"
@@ -19,8 +20,7 @@
 #include <fstream>
 #include <cctype>
 
-namespace boost { namespace property_tree { namespace info_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace info_parser {
 
     // Expand known escape sequences
     template<class It>
@@ -375,6 +375,6 @@ namespace boost { namespace property_tree { namespace info_parser
 
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif

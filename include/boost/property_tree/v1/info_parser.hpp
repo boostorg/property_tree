@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_V1_INFO_PARSER_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_V1_INFO_PARSER_HPP_INCLUDED
 
+#include <boost/property_tree/version.hpp>
 #include <boost/property_tree/v1/ptree.hpp>
 #include <boost/property_tree/v1/detail/info_parser_error.hpp>
 #include <boost/property_tree/v1/detail/info_parser_writer_settings.hpp>
@@ -17,8 +18,7 @@
 #include <boost/property_tree/v1/detail/info_parser_write.hpp>
 #include <istream>
 
-namespace boost { namespace property_tree { namespace info_parser
-{
+BOOST_PROPERTY_TREE_OPENNS(1) namespace info_parser {
 
     /**
      * Read INFO from a the given stream and translate it to a property tree.
@@ -137,15 +137,14 @@ namespace boost { namespace property_tree { namespace info_parser
         write_info_internal(stream, pt, filename, settings);
     }
 
-} } }
+} BOOST_PROPERTY_TREE_CLOSENS()
 
-namespace boost { namespace property_tree
-{
+BOOST_PROPERTY_TREE_OPENNS(1)
     using info_parser::info_parser_error;
     using info_parser::read_info;
     using info_parser::write_info;
     using info_parser::info_writer_settings;
     using info_parser::info_writer_make_settings;
-} }
+BOOST_PROPERTY_TREE_CLOSENS()
 
 #endif
