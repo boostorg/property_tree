@@ -81,13 +81,13 @@ template<class Ptree>
 Ptree get_test_ptree()
 {
     using namespace boost::property_tree;
-    typedef typename Ptree::key_type::value_type Ch;
+    typedef typename Ptree::key_type Str;
     Ptree pt;
-    pt.put_value(detail::widen<Ch>("data0"));
-    pt.put(detail::widen<Ch>("key1"), detail::widen<Ch>("data1"));
-    pt.put(detail::widen<Ch>("key1.key"), detail::widen<Ch>("data2"));
-    pt.put(detail::widen<Ch>("key2"), detail::widen<Ch>("data3"));
-    pt.put(detail::widen<Ch>("key2.key"), detail::widen<Ch>("data4"));
+    pt.put_value(detail::widen<Str>("data0"));
+    pt.put(detail::widen<Str>("key1"), detail::widen<Str>("data1"));
+    pt.put(detail::widen<Str>("key1.key"), detail::widen<Str>("data2"));
+    pt.put(detail::widen<Str>("key2"), detail::widen<Str>("data3"));
+    pt.put(detail::widen<Str>("key2.key"), detail::widen<Str>("data4"));
     return pt;
 }
 
@@ -104,7 +104,6 @@ void generic_parser_test(Ptree &pt,
 {
 
     using namespace boost::property_tree;
-    typedef typename Ptree::key_type::value_type Ch;
 
     // Create test files
     test_file file_1(test_data_1, filename_1);
@@ -236,7 +235,8 @@ void check_exact_roundtrip(ReadFunc rf, WriteFunc wf, const char *test_data) {
               << test_data << "\n-----\n";
     using namespace boost::property_tree;
     typedef typename Ptree::key_type::value_type Ch;
-    std::basic_string<Ch> native_test_data = detail::widen<Ch>(test_data);
+    typedef typename Ptree::key_type Str;
+    Str native_test_data = detail::widen<Str>(test_data);
 
     std::basic_istringstream<Ch> in_stream(native_test_data);
     std::basic_ostringstream<Ch> out_stream;

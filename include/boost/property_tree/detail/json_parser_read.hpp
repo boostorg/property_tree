@@ -32,9 +32,8 @@ namespace boost { namespace property_tree { namespace json_parser
     template<class Ptree>
     struct context
     {
-
-        typedef typename Ptree::key_type::value_type Ch;
-        typedef std::basic_string<Ch> Str;
+	typedef typename Ptree::key_type Str;
+        typedef typename Str::value_type Ch;
         typedef typename std::vector<Ch>::iterator It;
 
         Str string;
@@ -162,7 +161,8 @@ namespace boost { namespace property_tree { namespace json_parser
     {
 
         typedef context<Ptree> Context;
-        typedef typename Ptree::key_type::value_type Ch;
+        typedef typename Ptree::key_type Str;
+        typedef typename Str::value_type Ch;
 
         mutable Context c;
 
@@ -239,8 +239,8 @@ namespace boost { namespace property_tree { namespace json_parser
                     =   !ch_p("-") >>
                         (ch_p("0") | (range_p(Ch('1'), Ch('9')) >> *digit_p)) >>
                         !(ch_p(".") >> +digit_p) >>
-                        !(chset_p(detail::widen<Ch>("eE").c_str()) >>
-                          !chset_p(detail::widen<Ch>("-+").c_str()) >>
+                        !(chset_p(detail::widen<Str>("eE").c_str()) >>
+                          !chset_p(detail::widen<Str>("-+").c_str()) >>
                           +digit_p)
                         ;
 
@@ -255,7 +255,7 @@ namespace boost { namespace property_tree { namespace json_parser
                     ;
 
                 escape
-                    =   chset_p(detail::widen<Ch>("\"\\/bfnrt").c_str())
+                    =   chset_p(detail::widen<Str>("\"\\/bfnrt").c_str())
                             [typename Context::a_escape(self.c)]
                     |   'u' >> uint_parser<unsigned long, 16, 4, 4>()
                             [typename Context::a_unicode(self.c)]
