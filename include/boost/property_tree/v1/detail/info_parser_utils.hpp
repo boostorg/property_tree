@@ -7,25 +7,25 @@
 //
 // For more information, see www.boost.org
 // ----------------------------------------------------------------------------
-#ifndef BOOST_PROPERTY_TREE_DETAIL_INFO_PARSER_ERROR_HPP_INCLUDED
-#define BOOST_PROPERTY_TREE_DETAIL_INFO_PARSER_ERROR_HPP_INCLUDED
+#ifndef BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_CHCONV_HPP_INCLUDED
+#define BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_CHCONV_HPP_INCLUDED
 
-#include <boost/property_tree/detail/file_parser_error.hpp>
 #include <string>
 
 namespace boost { namespace property_tree { namespace info_parser
 {
 
-    class info_parser_error: public file_parser_error
+    template<class ChDest, class ChSrc>
+    std::basic_string<ChDest> convert_chtype(const ChSrc *text)
     {
-    public:
-        info_parser_error(const std::string &message,
-                          const std::string &filename,
-                          unsigned long line) :
-            file_parser_error(message, filename, line)
+        std::basic_string<ChDest> result;
+        while (*text)
         {
+            result += ChDest(*text);
+            ++text;
         }
-    };
+        return result;
+    }
 
 } } }
 

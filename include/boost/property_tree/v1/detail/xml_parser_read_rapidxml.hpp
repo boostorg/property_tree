@@ -7,14 +7,14 @@
 //
 // For more information, see www.boost.org
 // ----------------------------------------------------------------------------
-#ifndef BOOST_PROPERTY_TREE_DETAIL_XML_PARSER_READ_RAPIDXML_HPP_INCLUDED
-#define BOOST_PROPERTY_TREE_DETAIL_XML_PARSER_READ_RAPIDXML_HPP_INCLUDED
+#ifndef BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_READ_RAPIDXML_HPP_INCLUDED
+#define BOOST_PROPERTY_TREE_V1_DETAIL_XML_PARSER_READ_RAPIDXML_HPP_INCLUDED
 
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/detail/xml_parser_error.hpp>
-#include <boost/property_tree/detail/xml_parser_flags.hpp>
-#include <boost/property_tree/detail/xml_parser_utils.hpp>
-#include <boost/property_tree/detail/rapidxml.hpp>
+#include <boost/property_tree/v1/ptree.hpp>
+#include <boost/property_tree/v1/detail/xml_parser_error.hpp>
+#include <boost/property_tree/v1/detail/xml_parser_flags.hpp>
+#include <boost/property_tree/v1/detail/xml_parser_utils.hpp>
+#include <boost/property_tree/v1/detail/rapidxml.hpp>
 #include <vector>
 
 namespace boost { namespace property_tree { namespace xml_parser

@@ -7,10 +7,10 @@
 //
 // For more information, see www.boost.org
 // ----------------------------------------------------------------------------
-#ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_ERROR_HPP_INCLUDED
-#define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_ERROR_HPP_INCLUDED
+#ifndef BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_ERROR_HPP_INCLUDED
+#define BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_ERROR_HPP_INCLUDED
 
-#include <boost/property_tree/detail/file_parser_error.hpp>
+#include <boost/property_tree/v1/detail/file_parser_error.hpp>
 #include <string>
 
 namespace boost { namespace property_tree { namespace json_parser

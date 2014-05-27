@@ -7,12 +7,12 @@
 //
 // For more information, see www.boost.org
 // ----------------------------------------------------------------------------
-#ifndef BOOST_PROPERTY_TREE_DETAIL_INFO_PARSER_READ_HPP_INCLUDED
-#define BOOST_PROPERTY_TREE_DETAIL_INFO_PARSER_READ_HPP_INCLUDED
+#ifndef BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_READ_HPP_INCLUDED
+#define BOOST_PROPERTY_TREE_V1_DETAIL_INFO_PARSER_READ_HPP_INCLUDED
 
-#include "boost/property_tree/ptree.hpp"
-#include "boost/property_tree/detail/info_parser_error.hpp"
-#include "boost/property_tree/detail/info_parser_utils.hpp"
+#include "boost/property_tree/v1/ptree.hpp"
+#include "boost/property_tree/v1/detail/info_parser_error.hpp"
+#include "boost/property_tree/v1/detail/info_parser_utils.hpp"
 #include <iterator>
 #include <string>
 #include <stack>

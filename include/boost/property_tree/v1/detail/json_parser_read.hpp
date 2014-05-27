@@ -7,14 +7,14 @@
 //
 // For more information, see www.boost.org
 // ----------------------------------------------------------------------------
-#ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_READ_HPP_INCLUDED
-#define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_READ_HPP_INCLUDED
+#ifndef BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_READ_HPP_INCLUDED
+#define BOOST_PROPERTY_TREE_V1_DETAIL_JSON_PARSER_READ_HPP_INCLUDED
 
 //#define BOOST_SPIRIT_DEBUG
 
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/detail/ptree_utils.hpp>
-#include <boost/property_tree/detail/json_parser_error.hpp>
+#include <boost/property_tree/v1/ptree.hpp>
+#include <boost/property_tree/v1/detail/ptree_utils.hpp>
+#include <boost/property_tree/v1/detail/json_parser_error.hpp>
 #include <boost/spirit/include/classic.hpp>
 #include <boost/limits.hpp>
 #include <string>
