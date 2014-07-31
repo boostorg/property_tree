@@ -19,21 +19,21 @@
 
 namespace boost { namespace property_tree { namespace xml_parser
 {
-    template<class Str>
-    void write_xml_indent(std::basic_ostream<typename Str::value_type> &stream,
+    template<class Stream, class Settings>
+    void write_xml_indent(Stream &stream,
           int indent,
-          const xml_writer_settings<Str> & settings
+          const Settings & settings
           )
     {
-        stream << std::basic_string<typename Str::value_type>(indent * settings.indent_count, settings.indent_char);
+        stream << std::basic_string<typename Stream::char_type>(indent * settings.indent_count, settings.indent_char);
     }
 
-    template<class Str>
+    template<class Str, class Settings>
     void write_xml_comment(std::basic_ostream<typename Str::value_type> &stream,
                            const Str &s,
                            int indent,
                            bool separate_line,
-                           const xml_writer_settings<Str> & settings
+                           const Settings& settings
                            )
     {
 	typedef typename Str::value_type Ch;
@@ -46,12 +46,12 @@ namespace boost { namespace property_tree { namespace xml_parser
             stream << Ch('\n');
     }
     
-    template<class Str>
+    template<class Str, class Settings>
     void write_xml_text(std::basic_ostream<typename Str::value_type> &stream,
                         const Str &s,
                         int indent, 
                         bool separate_line,
-                        const xml_writer_settings<Str> & settings
+                        const Settings& settings
                         )
     {
 	typedef typename Str::value_type Ch;
@@ -62,12 +62,12 @@ namespace boost { namespace property_tree { namespace xml_parser
             stream << Ch('\n');
     }
 
-    template<class Ptree>
+    template<class Ptree, class Settings>
     void write_xml_element(std::basic_ostream<typename Ptree::key_type::value_type> &stream, 
                            const typename Ptree::key_type &key,
                            const Ptree &pt, 
                            int indent,
-                           const xml_writer_settings<typename Ptree::key_type> & settings)
+                           const Settings& settings)
     {
         typedef typename Ptree::key_type::value_type Ch;
         typedef typename Ptree::key_type Str;
@@ -177,11 +177,11 @@ namespace boost { namespace property_tree { namespace xml_parser
         }
     }
 
-    template<class Ptree>
+    template<class Ptree, class Settings>
     void write_xml_internal(std::basic_ostream<typename Ptree::key_type::value_type> &stream, 
                             const Ptree &pt,
                             const std::string &filename,
-                            const xml_writer_settings<typename Ptree::key_type> & settings)
+                            const Settings & settings)
     {
         typedef typename Ptree::key_type Str;
         stream  << detail::widen<Str>("<?xml version=\"1.0\" encoding=\"")

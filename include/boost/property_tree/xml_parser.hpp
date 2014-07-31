@@ -96,18 +96,36 @@ namespace boost { namespace property_tree { namespace xml_parser
      * @param settings The settings to use when writing out the property tree as
      *                 XML.
      */
-    template<class Ptree>
+    template<class Ptree, class Settings>
     void write_xml(std::basic_ostream<
                        typename Ptree::key_type::value_type
                    > &stream,
                    const Ptree &pt,
-                   const xml_writer_settings<
-                       typename Ptree::key_type
-                   > & settings = xml_writer_settings<
-                                    typename Ptree::key_type>() )
+                   const Settings & settings)
     {
         write_xml_internal(stream, pt, std::string(), settings);
     }
+
+    /**
+     * Translates the property tree to XML and writes it the given output
+     * stream.
+     * @throw xml_parser_error In case of error translating the property tree to
+     *                         XML or writing to the output stream.
+     * @param stream The stream to which to write the XML representation of the
+     *               property tree.
+     * @param pt The property tree to tranlsate to XML and output.
+     */
+    template<class Ptree>
+    void write_xml(std::basic_ostream<
+                       typename Ptree::key_type::value_type
+                   > &stream,
+                   const Ptree &pt )
+    {
+	xml_writer_settings<typename Ptree::key_type> settings;
+
+        write_xml_internal(stream, pt, std::string(), settings);
+    }
+
 
     /**
      * Translates the property tree to XML and writes it the given file.
@@ -120,13 +138,11 @@ namespace boost { namespace property_tree { namespace xml_parser
      * @param settings The settings to use when writing out the property tree as
      *                 XML.
      */
-    template<class Ptree>
+    template<class Ptree, class Settings>
     void write_xml(const std::string &filename,
                    const Ptree &pt,
-                   const std::locale &loc = std::locale(),
-                   const xml_writer_settings<
-                       typename Ptree::key_type
-                   > & settings = xml_writer_settings<typename Ptree::key_type>())
+                   const std::locale &loc,
+                   const Settings & settings)
     {
         std::basic_ofstream<typename Ptree::key_type::value_type>
             stream(filename.c_str());
@@ -135,6 +151,24 @@ namespace boost { namespace property_tree { namespace xml_parser
                 "cannot open file", filename, 0));
         stream.imbue(loc);
         write_xml_internal(stream, pt, filename, settings);
+    }
+
+    /**
+     * Translates the property tree to XML and writes it the given file.
+     * @throw xml_parser_error In case of error translating the property tree to
+     *                         XML or writing to the output stream.
+     * @param filename The file to which to write the XML representation of the
+     *                 property tree.
+     * @param pt The property tree to tranlsate to XML and output.
+     * @param loc The locale to use when writing the output to file.
+     */
+    template<class Ptree>
+    void write_xml(const std::string &filename,
+                   const Ptree &pt,
+                   const std::locale &loc = std::locale())
+    {
+	xml_writer_settings<typename Ptree::key_type> settings;
+	write_xml(filename, pt, loc, settings);
     }
 
 } } }
