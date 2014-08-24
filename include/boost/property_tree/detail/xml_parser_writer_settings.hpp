@@ -56,7 +56,7 @@ namespace boost { namespace property_tree { namespace xml_parser
     {
     public:
         xml_writer_settings(char inchar = ' ',
-                typename std::string::size_type incount = 0,
+                std::string::size_type incount = 0,
                 const std::string &enc = widen<std::string>("utf-8"))
             : indent_char(inchar)
             , indent_count(incount)
@@ -65,7 +65,7 @@ namespace boost { namespace property_tree { namespace xml_parser
         }
 
         char indent_char;
-        typename std::string::size_type indent_count;
+        std::string::size_type indent_count;
         std::string encoding;
     };
 
