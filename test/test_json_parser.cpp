@@ -414,26 +414,27 @@ void test_json_parser()
 
 }
 
-template <typename T>
-void test_escaping();
-
-template <>
-void test_escaping<char>()
+void test_escaping_utf8()
 {
-    std::string str = "Мама мыла раму";
+    // This is cyrillic text encoded as UTF-8
+    std::string str = "\xD0\x9C\xD0\xB0\xD0\xBC\xD0\xB0 "
+      "\xD0\xBC\xD1\x8B\xD0\xBB\xD0\xB0 \xD1\x80\xD0\xB0\xD0\xBC\xD1\x83";
     // Should NOT escape UTF-8
     BOOST_CHECK(boost::property_tree::json_parser::create_escapes(str) == str);
 }
 
-template <>
-void test_escaping<wchar_t>()
+void test_escaping_wide()
 {
     // Should NOT escape characters within ASCII range.
     std::wstring str1 = L"I am wstring with ASCII";
     BOOST_CHECK(boost::property_tree::json_parser::create_escapes(str1) == str1);
     // Should escape characters outside ASCII range - this is NOT utf-8
-    std::wstring str2 = L"Мама мыла раму";
-    BOOST_CHECK(boost::property_tree::json_parser::create_escapes(str2) == L"\\u041C\\u0430\\u043C\\u0430 \\u043C\\u044B\\u043B\\u0430 \\u0440\\u0430\\u043C\\u0443");
+    // This is cyrillic text
+    std::wstring str2 = L"\u041C\u0430\u043C\u0430 "
+        L"\u043C\u044B\u043B\u0430 \u0440\u0430\u043C\u0443";
+    BOOST_CHECK(boost::property_tree::json_parser::create_escapes(str2) ==
+        L"\\u041C\\u0430\\u043C\\u0430 "
+        L"\\u043C\\u044B\\u043B\\u0430 \\u0440\\u0430\\u043C\\u0443");
 }
 
 int test_main(int argc, char *argv[])
@@ -441,11 +442,11 @@ int test_main(int argc, char *argv[])
     using namespace boost::property_tree;
     test_json_parser<ptree>();
     test_json_parser<iptree>();
-    test_escaping<char>();
+    test_escaping_utf8();
 #ifndef BOOST_NO_CWCHAR
     test_json_parser<wptree>();
     test_json_parser<wiptree>();
-    test_escaping<wchar_t>();
+    test_escaping_wide();
 #endif
     return 0;
 }
