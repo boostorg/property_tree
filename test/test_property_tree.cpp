@@ -175,7 +175,7 @@ int test_main(int, char *[])
         ptree *pt = 0;
         run_tests(pt);
     }
-#if 0
+
     // wchar_t tests, case sensitive
 #ifndef BOOST_NO_CWCHAR
     {
@@ -183,7 +183,7 @@ int test_main(int, char *[])
         run_tests(pt);
     }
 #endif
-
+#if 0
     // char tests, case insensitive
     {
         iptree *pt = 0;
