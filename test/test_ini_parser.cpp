@@ -204,7 +204,8 @@ void test_other_trees()
         s.seekg(0, std::ios_base::beg);
         ptree result;
         read_ini(s, result);
-        BOOST_CHECK(pt == result);
+        BOOST_CHECK(result.get("section.innerkey", "bad") == "v1");
+        BOOST_CHECK(result.get("nosection", "bad") == "v2");
     }
 }
 

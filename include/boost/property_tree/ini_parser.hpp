@@ -200,6 +200,7 @@ namespace boost { namespace property_tree { namespace ini_parser
                                   const Ptree& pt,
                                   bool throw_on_children)
         {
+            typedef typename Ptree::key_type::value_type Ch;
             for (typename Ptree::const_iterator it = pt.begin(), end = pt.end();
                  it != end; ++it)
             {
@@ -232,6 +233,7 @@ namespace boost { namespace property_tree { namespace ini_parser
                             > &stream,
                             const Ptree& pt)
         {
+            typedef typename Ptree::key_type::value_type Ch;
             for (typename Ptree::const_iterator it = pt.begin(), end = pt.end();
                  it != end; ++it)
             {
@@ -269,9 +271,6 @@ namespace boost { namespace property_tree { namespace ini_parser
                    const Ptree &pt,
                    int flags = 0)
     {
-        typedef typename Ptree::key_type::value_type Ch;
-        typedef std::basic_string<Ch> Str;
-
         BOOST_ASSERT(validate_flags(flags));
         (void)flags;
 
