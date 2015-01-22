@@ -141,6 +141,7 @@ namespace boost { namespace property_tree
             {
                 s.clear(); // guarantees eof to be unset
                 e = 0;
+                s.setstate(std::ios_base::badbit);
                 return;
             }
             e = (signed char)i;
@@ -163,6 +164,7 @@ namespace boost { namespace property_tree
             if(i > (std::numeric_limits<unsigned char>::max)()) {
                 s.clear(); // guarantees eof to be unset
                 e = 0;
+                s.setstate(std::ios_base::badbit);
                 return;
             }
             e = (unsigned char)i;
