@@ -183,7 +183,7 @@ int test_main(int, char *[])
         run_tests(pt);
     }
 #endif
-#if 0
+
     // char tests, case insensitive
     {
         iptree *pt = 0;
@@ -197,6 +197,6 @@ int test_main(int, char *[])
         run_tests(pt);
     }
 #endif
-#endif
+
     return 0;
 }
