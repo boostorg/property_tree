@@ -8,7 +8,7 @@
 // For more information, see www.boost.org
 // ----------------------------------------------------------------------------
 
-//[debug_settings.includes
+//[debug_settings_includes
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
@@ -18,7 +18,7 @@
 #include <iostream>
 namespace pt = boost::property_tree;
 //]
-//[debug_settings.data
+//[debug_settings_data
 struct debug_settings
 {
     std::string m_file;               // log filename
@@ -28,7 +28,7 @@ struct debug_settings
     void save(const std::string &filename);
 };
 //]
-//[debug_settings.load
+//[debug_settings_load
 void debug_settings::load(const std::string &filename)
 {
     // Create empty property tree object
@@ -55,7 +55,7 @@ void debug_settings::load(const std::string &filename)
 
 }
 //]
-//[debug_settings.save
+//[debug_settings_save
 void debug_settings::save(const std::string &filename)
 {
     // Create an empty property tree object.
@@ -83,7 +83,7 @@ int main()
     try
     {
         debug_settings ds;
-        ds.load("debug_settings.xml");
+        ds.load("debug_settings_xml");
         ds.save("debug_settings_out.xml");
         std::cout << "Success\n";
     }

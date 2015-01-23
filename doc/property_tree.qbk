@@ -7,7 +7,7 @@
  /]
 
 [library Boost.PropertyTree
-    [quickbook 1.4]
+    [quickbook 1.6]
     [copyright 2008-2010 Marcin Kalicinski]
     [copyright 2010-2013 Sebastian Redl]
     [purpose Property Tree library]
