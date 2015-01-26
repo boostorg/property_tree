@@ -161,6 +161,7 @@ void run_tests(Ptree* pt)
     test_serialization(pt);
     test_bool(pt);
     test_char(pt);
+    test_float(pt);
     test_sort(pt);
     test_leaks(pt);                  // must be a final test
 }

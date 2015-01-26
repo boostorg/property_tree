@@ -1314,6 +1314,16 @@ void test_char(PTREE *)
     }
 }
 
+void test_float(PTREE*)
+{
+    const double difficult = -183.12345000098765e-10;
+    PTREE pt;
+    pt.put(T("num"), difficult);
+    double result = pt.get<double>(T("num"));
+
+    BOOST_CHECK(!(result < difficult || result > difficult));
+}
+
 void test_sort(PTREE *)
 {
   PTREE pt;
