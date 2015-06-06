@@ -17,8 +17,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_example_custom_data_ty
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_example_debug_settings", "test_example_debug_settings.vcproj", "{16D41CBD-3C58-4631-B4D4-29A42E47D619}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_example_empty_ptree_trick", "test_example_empty_ptree_trick.vcproj", "{A242FE56-D039-4CEC-9FD3-AACABEA684C9}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_info_grammar_spirit", "test_info_grammar_spirit.vcproj", "{305891FE-2572-4F6A-A52B-3A1964A3CA76}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_multi_module", "test_multi_module.vcproj", "{4B88BAC5-5CA8-403A-83E7-0F758405AB2D}"
