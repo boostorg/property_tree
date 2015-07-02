@@ -40,39 +40,39 @@ struct prefixing_callbacks
 
     void on_null() {
         base::on_null();
-        current_value().insert(0, constants::null_prefix<char_type>());
+        this->current_value().insert(0, constants::null_prefix<char_type>());
     }
 
     void on_boolean(bool b) {
         base::on_boolean(b);
-        current_value().insert(0, constants::boolean_prefix<char_type>());
+        this->current_value().insert(0, constants::boolean_prefix<char_type>());
     }
 
     template <typename Range>
     void on_number(Range code_units) {
         base::on_number(code_units);
-        current_value().insert(0, constants::number_prefix<char_type>());
+        this->current_value().insert(0, constants::number_prefix<char_type>());
     }
     void on_begin_number() {
         base::on_begin_number();
-        current_value() = constants::number_prefix<char_type>();
+        this->current_value() = constants::number_prefix<char_type>();
     }
 
     void on_begin_string() {
         base::on_begin_string();
         if (!this->is_key()) {
-            current_value() = constants::string_prefix<char_type>();
+            this->current_value() = constants::string_prefix<char_type>();
         }
     }
 
     void on_begin_array() {
         base::on_begin_array();
-        current_value() = constants::array_prefix<char_type>();
+        this->current_value() = constants::array_prefix<char_type>();
     }
 
     void on_begin_object() {
         base::on_begin_object();
-        current_value() = constants::object_prefix<char_type>();
+        this->current_value() = constants::object_prefix<char_type>();
     }
 };
 

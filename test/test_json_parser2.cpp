@@ -111,7 +111,7 @@ template <typename Ch>
 struct standard_parser
     : test_parser<
         json_parser::detail::standard_callbacks<
-            basic_ptree<std::basic_string<Ch>, std::basic_string<Ch>>>,
+            basic_ptree<std::basic_string<Ch>, std::basic_string<Ch> > >,
         Ch>
 {};
 
@@ -119,18 +119,18 @@ template <typename Ch>
 struct prefixing_parser
     : test_parser<
         prefixing_callbacks<
-            basic_ptree<std::basic_string<Ch>, std::basic_string<Ch>>>,
+            basic_ptree<std::basic_string<Ch>, std::basic_string<Ch> > >,
         Ch>
 {};
 
-namespace boost { namespace test_tools {
+namespace boost { namespace test_tools { namespace tt_detail {
     template<>
     struct print_log_value<std::wstring> {
         void operator()(std::ostream& os, const std::wstring& s) {
             print_log_value<const wchar_t*>()(os, s.c_str());
         }
     };
-}}
+}}}
 BOOST_TEST_DONT_PRINT_LOG_VALUE(ptree::iterator)
 BOOST_TEST_DONT_PRINT_LOG_VALUE(ptree::const_iterator)
 BOOST_TEST_DONT_PRINT_LOG_VALUE(wptree::iterator)

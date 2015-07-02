@@ -64,19 +64,19 @@ namespace boost { namespace property_tree {
 
         void on_begin_array() {
             new_tree();
-            stack.back().k = kind::array;
+            stack.back().k = array;
         }
         void on_end_array() {
-            if (stack.back().k == kind::leaf) stack.pop_back();
+            if (stack.back().k == leaf) stack.pop_back();
             stack.pop_back();
         }
 
         void on_begin_object() {
             new_tree();
-            stack.back().k = kind::object;
+            stack.back().k = object;
         }
         void on_end_object() {
-            if (stack.back().k == kind::leaf) stack.pop_back();
+            if (stack.back().k == leaf) stack.pop_back();
             stack.pop_back();
         }
 
@@ -84,12 +84,12 @@ namespace boost { namespace property_tree {
 
     protected:
         bool is_key() const {
-            return stack.back().k == kind::key;
+            return stack.back().k == key;
         }
         string& current_value() {
-            auto& l = stack.back();
+            layer& l = stack.back();
             switch (l.k) {
-            case kind::key: return key_buffer;
+            case key: return key_buffer;
             default: return l.t->data();
             }
         }
@@ -97,48 +97,53 @@ namespace boost { namespace property_tree {
     private:
         Ptree root;
         string key_buffer;
-        enum class kind { array, object, key, leaf };
+        enum kind { array, object, key, leaf };
         struct layer { kind k; Ptree* t; };
         std::vector<layer> stack;
 
         Ptree& new_tree() {
             if (stack.empty()) {
-                stack.push_back({kind::leaf, &root});
+                layer l{leaf, &root};
+                stack.push_back(l);
                 return root;
             }
-            auto& l = stack.back();
+            layer& l = stack.back();
             switch (l.k) {
-            case kind::array:
+            case array: {
                 l.t->push_back(std::make_pair(string(), Ptree()));
-                stack.push_back({kind::leaf, &l.t->back().second});
+                layer nl{leaf, &l.t->back().second};
+                stack.push_back(nl);
                 return *stack.back().t;
-            case kind::object:
+            }
+            case object:
                 assert(false); // must start with string, i.e. call new_value
-            case kind::key:
-                l.t->push_back(std::make_pair(std::move(key_buffer), Ptree()));
-                l.k = kind::object;
-                stack.push_back({kind::leaf, &l.t->back().second});
+            case key: {
+                l.t->push_back(std::make_pair(key_buffer, Ptree()));
+                l.k = object;
+                layer nl{leaf, &l.t->back().second};
+                stack.push_back(nl);
                 return *stack.back().t;
-            case kind::leaf:
+            }
+            case leaf:
                 stack.pop_back();
                 return new_tree();
             }
             assert(false);
-            __assume(false);
         }
         string& new_value() {
             if (stack.empty()) return new_tree().data();
-            auto& l = stack.back();
+            layer& l = stack.back();
             switch (l.k) {
-            case kind::leaf:
+            case leaf:
                 stack.pop_back();
                 return new_value();
-            case kind::object:
-                l.k = kind::key;
+            case object:
+                l.k = key;
                 key_buffer.clear();
                 return key_buffer;
+            default:
+                return new_tree().data();
             }
-            return new_tree().data();
         }
     };
 

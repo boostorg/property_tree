@@ -138,7 +138,7 @@ namespace boost { namespace property_tree {
         }
 
         int trail_table(unsigned char c) const {
-            static const char table[] = {
+            static const signed char table[] = {
                                  /* not a lead byte */
                 /* 0x10???sss */ -1, -1, -1, -1, -1, -1, -1, -1,
                 /* 0x110??sss */ 1, 1, 1, 1, /* 1 trailing byte */
