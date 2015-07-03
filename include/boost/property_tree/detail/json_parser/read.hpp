@@ -35,7 +35,6 @@ namespace boost { namespace property_tree {
         Ptree &pt, const std::string &filename)
     {
         typedef typename Ptree::key_type::value_type char_type;
-        typedef typename Ptree::key_compare key_compare;
         typedef standard_callbacks<Ptree> callbacks_type;
         typedef detail::encoding<char_type> encoding_type;
         typedef std::istreambuf_iterator<char_type> iterator;

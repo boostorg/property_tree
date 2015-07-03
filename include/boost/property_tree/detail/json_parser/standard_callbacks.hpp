@@ -103,7 +103,7 @@ namespace boost { namespace property_tree {
 
         Ptree& new_tree() {
             if (stack.empty()) {
-                layer l{leaf, &root};
+                layer l = {leaf, &root};
                 stack.push_back(l);
                 return root;
             }
@@ -111,7 +111,7 @@ namespace boost { namespace property_tree {
             switch (l.k) {
             case array: {
                 l.t->push_back(std::make_pair(string(), Ptree()));
-                layer nl{leaf, &l.t->back().second};
+                layer nl = {leaf, &l.t->back().second};
                 stack.push_back(nl);
                 return *stack.back().t;
             }
@@ -120,7 +120,7 @@ namespace boost { namespace property_tree {
             case key: {
                 l.t->push_back(std::make_pair(key_buffer, Ptree()));
                 l.k = object;
-                layer nl{leaf, &l.t->back().second};
+                layer nl = {leaf, &l.t->back().second};
                 stack.push_back(nl);
                 return *stack.back().t;
             }
