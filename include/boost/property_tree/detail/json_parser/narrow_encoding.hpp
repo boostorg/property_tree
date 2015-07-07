@@ -128,6 +128,15 @@ namespace boost { namespace property_tree {
             }
         }
 
+        template <typename Iterator, typename Sentinel>
+        void skip_introduction(Iterator& cur, Sentinel end) const {
+            if (cur != end && static_cast<unsigned char>(*cur) == 0xef) {
+                if (++cur == end) return;
+                if (++cur == end) return;
+                if (++cur == end) return;
+            }
+        }
+
     private:
         struct DoNothing {
             void operator ()(char) const {}

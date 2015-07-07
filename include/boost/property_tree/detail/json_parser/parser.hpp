@@ -30,6 +30,11 @@ namespace boost { namespace property_tree {
             this->filename = filename;
             cur = r.begin();
             end = r.end();
+            // Note that there is no backtracking, so if e.g. a UTF-8 file
+            // starts with something that initially looks like a BOM but isn't,
+            // there's trouble.
+            // However, no valid JSON file can start with a UTF-8 EF byte.
+            encoding.skip_introduction(cur, end);
             line = 1;
             offset = 0;
         }

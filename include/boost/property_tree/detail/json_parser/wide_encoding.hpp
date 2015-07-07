@@ -97,6 +97,14 @@ namespace boost { namespace property_tree {
             feed_codepoint(codepoint, transcoded_fn, test_utf16());
         }
 
+        template <typename Iterator, typename Sentinel>
+        void skip_introduction(Iterator& cur, Sentinel end) const {
+            // Endianness is already decoded at this level.
+            if (cur != end && *cur == 0xfeff) {
+                ++cur;
+            }
+        }
+
     private:
         struct DoNothing {
             void operator ()(wchar_t) const {}
