@@ -81,6 +81,37 @@ namespace boost { namespace property_tree { namespace info_parser
             ++text;
     }
 
+    // End-of-line BEFORE end-of-comment. If false text now points to next token after comment, which could be end-of-line  !!! GMcN !!!
+    template<class Ch>
+    bool eol_before_eoc(Ch *&text)
+    {
+        using namespace std;
+        bool eol = false;
+        skip_whitespace(text);
+        bool first_loop = true;
+        bool eoc = false;
+        while (*text != Ch('\0'))
+        {
+          if (first_loop)
+          {
+            --text;
+            first_loop = false;
+          }
+          ++text;
+          if (*text != Ch('\0') && *text == Ch('*') && *(text+1) == Ch('/'))
+          {
+            text += 2;
+            skip_whitespace(text);
+            eoc = true;
+            break;
+          }
+        }
+        if (*text == Ch('\0') && !eoc)
+            eol = true;
+        
+        return eol;
+    }
+
     // Extract word (whitespace delimited) and advance pointer accordingly
     template<class Ch>
     std::basic_string<Ch> read_word(const Ch *&text)
@@ -197,11 +228,13 @@ namespace boost { namespace property_tree { namespace info_parser
         enum state_t {
             s_key,              // Parser expects key
             s_data,             // Parser expects data
-            s_data_cont         // Parser expects data continuation
+            s_data_cont,        // Parser expects data continuation
+            s_comment           // Parser in /* */ comment block  !!! GMcN !!!
         };
 
         unsigned long line_no = 0;
         state_t state = s_key;          // Parser state
+        state_t state_next = s_key;     // Next parser state after /* */ comment block  !!! GMcN !!!
         Ptree *last = NULL;             // Pointer to last created ptree
         // Define line here to minimize reallocations
         str_t line;
@@ -221,6 +254,18 @@ namespace boost { namespace property_tree { namespace info_parser
                         "read error", filename, line_no));
                 const Ch *text = line.c_str();
 
+                if (state == s_comment)  // Handle being in block comment !!! GMcN !!!
+                {
+                    if (eol_before_eoc(text))
+                        continue;
+                    else
+                    {
+                        state = state_next;
+                        if (*text == Ch('\0'))
+                          continue;
+                    }
+                }
+                      
                 // If directive found
                 skip_whitespace(text);
                 if (*text == Ch('#')) {
@@ -264,12 +309,33 @@ namespace boost { namespace property_tree { namespace info_parser
                 // While there are characters left in line
                 while (1) {
 
-                    // Stop parsing on end of line or comment
+                    // Stop parsing on end of line or comment (; // -- or /* */) !!! GMcN !!!
                     skip_whitespace(text);
-                    if (*text == Ch('\0') || *text == Ch(';')) {
-                        if (state == s_data)    // If there was no data set state to s_key
-                            state = s_key;
-                        break;
+                    if (*text == Ch('\0') || *text == Ch(';')                               ||
+                       (*text == Ch('/') && (*(text+1) == Ch('/') || *(text+1) == Ch('*'))) ||
+                       (*text == Ch('-') && (*(text+1) == Ch('-'))))
+                    {
+                        if (*text == Ch('/') && *(text+1) == Ch('*'))  // Start of /* */ block comment
+                        {
+                            state_next = state;   // state to set after /* */ block
+                            state = s_comment;
+
+                            // Check that /* */ comment does not end in this line
+                            if (eol_before_eoc(text))  // next line if end of line reached
+                                break;
+                            else
+                            {
+                                state = state_next;
+                                if (*text == Ch('\0'))
+                                    break;
+                            }
+                        }
+                        else 
+                        {
+                            if (state == s_data)    // If there was no data set state to s_key
+                                state = s_key;
+                            break;
+                        }
                     }
 
                     // Process according to current parser state
