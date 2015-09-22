@@ -3,6 +3,7 @@
 
 #include <boost/property_tree/detail/json_parser_error.hpp>
 
+#include <boost/ref.hpp>
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
 
