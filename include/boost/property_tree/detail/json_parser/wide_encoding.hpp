@@ -112,7 +112,7 @@ namespace boost { namespace property_tree {
 
         template <typename Iterator, typename Sentinel, typename TranscodedFn,
                   typename EncodingErrorFn>
-        void transcode_codepoint(Iterator& cur, Sentinel end,
+        void transcode_codepoint(Iterator& cur, Sentinel,
                                  TranscodedFn transcoded_fn,
                                  EncodingErrorFn error_fn,
                                  is_utf16<false>) const {
@@ -125,7 +125,7 @@ namespace boost { namespace property_tree {
         }
         template <typename Iterator, typename Sentinel, typename TranscodedFn,
                   typename EncodingErrorFn>
-        void transcode_codepoint(Iterator& cur, Sentinel end,
+        void transcode_codepoint(Iterator& cur, Sentinel,
                                  TranscodedFn transcoded_fn,
                                  EncodingErrorFn error_fn,
                                  is_utf16<true>) const {
