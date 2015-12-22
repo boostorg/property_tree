@@ -101,6 +101,11 @@ namespace boost { namespace property_tree { namespace json_parser
                 is_string = false;
                 stream << data;
             }
+            if (data == "null")
+            {
+                is_string = false;
+                stream << data;
+            }
             //Display as a string
             if (is_string)
                 stream << Ch('"') << data << Ch('"');
