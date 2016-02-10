@@ -68,7 +68,7 @@ namespace boost { namespace property_tree {
         }
 
         char to_internal_trivial(char c) const {
-            BOOST_ASSERT(c <= 0x7f);
+            BOOST_ASSERT(static_cast<unsigned char>(c) <= 0x7f);
             return c;
         }
 
