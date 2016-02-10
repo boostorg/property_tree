@@ -2167,12 +2167,25 @@ namespace boost { namespace property_tree { namespace detail {namespace rapidxml
             // For all children and text
             while (1)
             {
-                // Skip whitespace between > and node contents
-                Ch *contents_start = text;      // Store start of node contents before whitespace is skipped
-                if (Flags & parse_trim_whitespace)
-                    skip<whitespace_pred, Flags>(text);
-                Ch next_char = *text;
+                // Skip whitespace between > and node contents in case of trim_whitespace and in case there
+                // is no non-whitespace content at all in between "<ELEMENT>XXX<subelement>" (i.e. XXX is only
+                // whitespace)
 
+                Ch *contents_start = text;      // Store start of node contents before whitespace is skipped
+                skip<whitespace_pred, Flags>(text);
+
+                Ch next_char = *text;
+                if (!(Flags & parse_trim_whitespace))
+                {
+                    if (next_char != '<')
+                    {
+                        text = contents_start;
+                    }
+                    // The else case is the case where only whitespace and other subelements exist.
+                    // We have to delete whitespace, even when trim_whitespace is off
+                    // otherwise we will have exponentially growing newlines in the XML in case of
+                    // neither trim_whitespace or normalize_whitespace
+                }
             // After data nodes, instead of continuing the loop, control jumps here.
             // This is because zero termination inside parse_and_append_data() function
             // would wreak havoc with the above code.
