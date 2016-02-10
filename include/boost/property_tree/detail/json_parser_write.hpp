@@ -65,7 +65,7 @@ namespace boost { namespace property_tree { namespace json_parser
     }
 
     template<class Ptree>
-    void write_json_helper(std::basic_ostream<typename Ptree::key_type::value_type> &stream, 
+    void write_json_helper(std::basic_ostream<typename Ptree::key_type::value_type> &stream,
                            const Ptree &pt,
                            int indent, bool pretty)
     {
@@ -78,8 +78,37 @@ namespace boost { namespace property_tree { namespace json_parser
         {
             // Write value
             Str data = create_escapes(pt.template get_value<Str>());
-            stream << Ch('"') << data << Ch('"');
 
+            bool is_string = true;
+            //Try to cast to a number
+            {
+                std::basic_istringstream<Ch> iss(data);
+                long double value;
+                if (!(!(iss >> value) || !iss.eof()))
+                {
+                    is_string = false;
+                    stream << data;
+                }
+            }
+            //Try with a boolean
+            if (data == "true")
+            {
+                is_string = false;
+                stream << data;
+            }
+            if (data == "false")
+            {
+                is_string = false;
+                stream << data;
+            }
+            if (data == "null")
+            {
+                is_string = false;
+                stream << data;
+            }
+            //Display as a string
+            if (is_string)
+                stream << Ch('"') << data << Ch('"');
         }
         else if (indent > 0 && pt.count(Str()) == pt.size())
         {
@@ -158,7 +187,6 @@ namespace boost { namespace property_tree { namespace json_parser
         if (!verify_json(pt, 0))
             BOOST_PROPERTY_TREE_THROW(json_parser_error("ptree contains data that cannot be represented in JSON format", filename, 0));
         write_json_helper(stream, pt, 0, pretty);
-        stream << std::endl;
         if (!stream.good())
             BOOST_PROPERTY_TREE_THROW(json_parser_error("write error", filename, 0));
     }
