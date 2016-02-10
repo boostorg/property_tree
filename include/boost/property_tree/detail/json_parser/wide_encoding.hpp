@@ -112,7 +112,7 @@ namespace boost { namespace property_tree {
 
         template <typename Iterator, typename Sentinel, typename TranscodedFn,
                   typename EncodingErrorFn>
-        void transcode_codepoint(Iterator& cur, Sentinel end,
+        void transcode_codepoint(Iterator& cur, Sentinel,
                                  TranscodedFn transcoded_fn,
                                  EncodingErrorFn error_fn,
                                  is_utf16<false>) const {
@@ -139,6 +139,9 @@ namespace boost { namespace property_tree {
             transcoded_fn(c);
             ++cur;
             if (is_surrogate_high(c)) {
+                if (cur == end) {
+                    error_fn();
+                }
                 c = *cur;
                 if (!is_surrogate_low(c)) {
                     error_fn();
