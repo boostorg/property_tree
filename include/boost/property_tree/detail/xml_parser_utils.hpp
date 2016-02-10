@@ -23,8 +23,8 @@ namespace boost { namespace property_tree { namespace xml_parser
     template<class Str>
     Str condense(const Str &s)
     {
-	typedef typename Str::value_type Ch;
-	Str r;
+        typedef typename Str::value_type Ch;
+        Str r;
         std::locale loc;
         bool space = false;
         typename Str::const_iterator end = s.end();
@@ -78,11 +78,11 @@ namespace boost { namespace property_tree { namespace xml_parser
         }
         return r;
     }
-    
+
     template<class Str>
     Str decode_char_entities(const Str &s)
     {
-	typedef typename Str::value_type Ch;
+        typedef typename Str::value_type Ch;
         Str r;
         typename Str::const_iterator end = s.end();
         for (typename Str::const_iterator it = s.begin(); it != end; ++it)
@@ -107,7 +107,7 @@ namespace boost { namespace property_tree { namespace xml_parser
         }
         return r;
     }
-    
+
     template<class Str>
     const Str &xmldecl()
     {

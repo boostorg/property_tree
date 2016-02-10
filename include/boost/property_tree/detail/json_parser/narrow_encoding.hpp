@@ -1,9 +1,9 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_NARROW_ENCODING_HPP
 #define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_NARROW_ENCODING_HPP
 
+#include <boost/assert.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
-#include <cassert>
 #include <utility>
 
 namespace boost { namespace property_tree {
@@ -68,7 +68,7 @@ namespace boost { namespace property_tree {
         }
 
         char to_internal_trivial(char c) const {
-            assert(c <= 0x7f);
+            BOOST_ASSERT(c <= 0x7f);
             return c;
         }
 
