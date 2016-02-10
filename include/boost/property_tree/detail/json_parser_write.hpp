@@ -51,10 +51,10 @@ namespace boost { namespace property_tree { namespace json_parser
                 unsigned long u = (std::min)(static_cast<unsigned long>(
                                                  static_cast<UCh>(*b)),
                                              0xFFFFul);
-                int d1 = u / 4096; u -= d1 * 4096;
-                int d2 = u / 256; u -= d2 * 256;
-                int d3 = u / 16; u -= d3 * 16;
-                int d4 = u;
+                unsigned long d1 = u / 4096; u -= d1 * 4096;
+                unsigned long d2 = u / 256; u -= d2 * 256;
+                unsigned long d3 = u / 16; u -= d3 * 16;
+                unsigned long d4 = u;
                 result += Ch('\\'); result += Ch('u');
                 result += Ch(hexdigits[d1]); result += Ch(hexdigits[d2]);
                 result += Ch(hexdigits[d3]); result += Ch(hexdigits[d4]);
