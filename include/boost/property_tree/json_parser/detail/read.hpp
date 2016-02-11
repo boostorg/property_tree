@@ -10,10 +10,10 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_READ_HPP
 #define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_READ_HPP
 
-#include <boost/property_tree/detail/json_parser/parser.hpp>
-#include <boost/property_tree/detail/json_parser/narrow_encoding.hpp>
-#include <boost/property_tree/detail/json_parser/wide_encoding.hpp>
-#include <boost/property_tree/detail/json_parser/standard_callbacks.hpp>
+#include <boost/property_tree/json_parser/detail/parser.hpp>
+#include <boost/property_tree/json_parser/detail/narrow_encoding.hpp>
+#include <boost/property_tree/json_parser/detail/wide_encoding.hpp>
+#include <boost/property_tree/json_parser/detail/standard_callbacks.hpp>
 
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_same.hpp>

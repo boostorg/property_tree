@@ -1,7 +1,7 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_PARSER_HPP
 #define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_PARSER_HPP
 
-#include <boost/property_tree/detail/json_parser_error.hpp>
+#include <boost/property_tree/json_parser/error.hpp>
 
 #include <boost/ref.hpp>
 #include <boost/bind.hpp>
