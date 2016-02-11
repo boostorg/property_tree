@@ -15,7 +15,8 @@
 #include <boost/property_tree/detail/json_parser/wide_encoding.hpp>
 #include <boost/property_tree/detail/json_parser/standard_callbacks.hpp>
 
-#include <boost/range/iterator_range_core.hpp>
+#include <boost/static_assert.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 #include <istream>
 #include <iterator>
@@ -24,6 +25,45 @@
 namespace boost { namespace property_tree {
     namespace json_parser { namespace detail
 {
+
+    template <typename Iterator, typename Sentinel>
+    class minirange
+    {
+    public:
+        minirange(Iterator first, Sentinel last) : first(first), last(last) {}
+        Iterator begin() const { return first; }
+        Sentinel end() const { return last; }
+
+    private:
+        Iterator first;
+        Sentinel last;
+    };
+    template <typename Iterator, typename Sentinel>
+    minirange<Iterator, Sentinel> make_minirange(Iterator first, Sentinel last)
+    {
+        return minirange<Iterator, Sentinel>(first, last);
+    }
+
+    template <typename Iterator, typename Sentinel,
+              typename Encoding, typename Callbacks>
+    void read_json_internal(Iterator first, Sentinel last, Encoding& encoding,
+        Callbacks& callbacks, const std::string& filename)
+    {
+        BOOST_STATIC_ASSERT_MSG(boost::is_same<
+            typename std::iterator_traits<Iterator>::value_type,
+            typename Encoding::external_char>::value,
+            "Encoding is not capable of using the iterator's value type.");
+        BOOST_STATIC_ASSERT_MSG(boost::is_same<
+            typename Callbacks::char_type,
+            typename Encoding::internal_char>::value,
+            "Encoding is not capable of producing the needed character type.");
+
+        detail::parser<Callbacks, Encoding, Iterator, Sentinel>
+            parser(callbacks, encoding);
+        parser.set_input(filename, make_minirange(first, last));
+        parser.parse_value();
+        parser.finish();
+    }
 
     template <typename Ch> struct encoding;
     template <> struct encoding<char> : utf8_utf8_encoding {};
@@ -40,13 +80,8 @@ namespace boost { namespace property_tree {
         typedef std::istreambuf_iterator<char_type> iterator;
         callbacks_type callbacks;
         encoding_type encoding;
-        detail::parser<callbacks_type, encoding_type, iterator, iterator>
-            parser(callbacks, encoding);
-        parser.set_input(filename,
-            boost::make_iterator_range(iterator(stream), iterator()));
-        parser.parse_value();
-        parser.finish();
-
+        read_json_internal(iterator(stream), iterator(),
+            encoding, callbacks, filename);
         pt.swap(callbacks.output());
     }
 
