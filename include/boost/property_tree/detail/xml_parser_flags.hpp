@@ -20,10 +20,16 @@ namespace boost { namespace property_tree { namespace xml_parser
     static const int no_comments     = 0x2;
     /// Whitespace should be collapsed and trimmed.
     static const int trim_whitespace = 0x4;
+    /// Whitespace should only be trimmed.
+    static const int trim_whitespace_without_normalization = 0x8;
 
     inline bool validate_flags(int flags)
     {
-        return (flags & ~(no_concat_text | no_comments | trim_whitespace)) == 0;
+        return (flags & ~(no_concat_text
+                        | no_comments
+                        | trim_whitespace
+                        | trim_whitespace_without_normalization
+                          )) == 0;
     }
 
 } } }
