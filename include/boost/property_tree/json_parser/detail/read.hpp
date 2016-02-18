@@ -49,13 +49,13 @@ namespace boost { namespace property_tree {
     void read_json_internal(Iterator first, Sentinel last, Encoding& encoding,
         Callbacks& callbacks, const std::string& filename)
     {
-        BOOST_STATIC_ASSERT_MSG(boost::is_same<
+        BOOST_STATIC_ASSERT_MSG((boost::is_same<
             typename std::iterator_traits<Iterator>::value_type,
-            typename Encoding::external_char>::value,
+            typename Encoding::external_char>::value),
             "Encoding is not capable of using the iterator's value type.");
-        BOOST_STATIC_ASSERT_MSG(boost::is_same<
+        BOOST_STATIC_ASSERT_MSG((boost::is_same<
             typename Callbacks::char_type,
-            typename Encoding::internal_char>::value,
+            typename Encoding::internal_char>::value),
             "Encoding is not capable of producing the needed character type.");
 
         detail::parser<Callbacks, Encoding, Iterator, Sentinel>
