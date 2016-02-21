@@ -15,6 +15,8 @@
 #include <boost/property_tree/detail/xml_parser_flags.hpp>
 #include <boost/property_tree/detail/xml_parser_utils.hpp>
 #include <boost/property_tree/detail/rapidxml.hpp>
+#include <boost/core/ignore_unused.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 #include <vector>
 
 namespace boost { namespace property_tree { namespace xml_parser
@@ -101,7 +103,13 @@ namespace boost { namespace property_tree { namespace xml_parser
                 xml_parser_error("read error", filename, 0));
         v.push_back(0); // zero-terminate
 
-        try {
+        // When compiling without exception support there is no formal
+        // parameter "e" in the catch handler.  Declaring a local variable
+        // here does not hurt and will be "used" to make the code in the
+        // handler compilable although the code will never be executed.
+        parse_error e(NULL, NULL); ignore_unused(e);
+        
+        BOOST_TRY {
             // Parse using appropriate flags
             const int f_tws = parse_normalize_whitespace
                             | parse_trim_whitespace;
@@ -131,12 +139,13 @@ namespace boost { namespace property_tree { namespace xml_parser
 
             // Swap local and result ptrees
             pt.swap(local);
-        } catch (parse_error &e) {
+        } BOOST_CATCH (parse_error &e) {
             long line = static_cast<long>(
                 std::count(&v.front(), e.where<Ch>(), Ch('\n')) + 1);
             BOOST_PROPERTY_TREE_THROW(
                 xml_parser_error(e.what(), filename, line));  
         }
+        BOOST_CATCH_END
     }
 
 } } }

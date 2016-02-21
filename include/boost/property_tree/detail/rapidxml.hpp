@@ -28,7 +28,7 @@
     
 #include <exception>    // For std::exception
 
-#define BOOST_PROPERTY_TREE_RAPIDXML_PARSE_ERROR(what, where) throw parse_error(what, where)
+#define BOOST_PROPERTY_TREE_RAPIDXML_PARSE_ERROR(what, where) boost::throw_exception(parse_error(what, where))
 
 namespace boost { namespace property_tree { namespace detail {namespace rapidxml
 {
