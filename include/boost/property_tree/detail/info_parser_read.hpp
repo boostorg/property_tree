@@ -13,7 +13,6 @@
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/detail/info_parser_error.hpp"
 #include "boost/property_tree/detail/info_parser_utils.hpp"
-#include "boost/core/ignore_unused.hpp"
 #include "boost/core/no_exceptions_support.hpp"
 #include <iterator>
 #include <string>
@@ -212,12 +211,6 @@ namespace boost { namespace property_tree { namespace info_parser
         std::stack<Ptree *> stack;
         stack.push(&pt);                // Push root ptree on stack initially
 
-        // When compiling without exception support there is no formal
-        // parameter "e" in the catch handler.  Declaring a local variable
-        // here does not hurt and will be "used" to make the code in the
-        // handler  compilable although the code will never be executed.
-        info_parser_error e("", "", 0); ignore_unused(e);
-
         BOOST_TRY {
             // While there are characters in the stream
             while (stream.good()) {
@@ -382,6 +375,7 @@ namespace boost { namespace property_tree { namespace info_parser
         }
         BOOST_CATCH (info_parser_error &e)
         {
+    #ifndef BOOST_NO_EXCEPTIONS
             // If line undefined rethrow error with correct filename and line
             if (e.line() == 0)
             {
@@ -389,7 +383,7 @@ namespace boost { namespace property_tree { namespace info_parser
             }
             else
                 BOOST_PROPERTY_TREE_THROW(e);
-
+    #endif
         }
         BOOST_CATCH_END
 

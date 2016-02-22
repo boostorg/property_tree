@@ -14,7 +14,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/detail/ptree_utils.hpp>
 #include <boost/property_tree/detail/file_parser_error.hpp>
-#include <boost/core/ignore_unused.hpp>
 #include <boost/core/no_exceptions_support.hpp>
 #include <fstream>
 #include <string>
@@ -168,18 +167,14 @@ namespace boost { namespace property_tree { namespace ini_parser
                 "cannot open file", filename, 0));
         stream.imbue(loc);
 
-        // When compiling without exception support there is no formal
-        // parameter "e" in the catch handler.  Declaring a local variable
-        // here does not hurt and will be "used" to make the code in the
-        // handler compilable although the code will never be executed.
-        ini_parser_error e("", "", 0); ignore_unused(e);
-
         BOOST_TRY {
             read_ini(stream, pt);
         }
         BOOST_CATCH (ini_parser_error &e) {
+    #ifndef BOOST_NO_EXCEPTIONS
             BOOST_PROPERTY_TREE_THROW(ini_parser_error(
                 e.message(), filename, e.line()));
+    #endif
         }
         BOOST_CATCH_END
     }
@@ -324,18 +319,14 @@ namespace boost { namespace property_tree { namespace ini_parser
                 "cannot open file", filename, 0));
         stream.imbue(loc);
 
-        // When compiling without exception support there is no formal
-        // parameter "e" in the catch handler.  Declaring a local variable
-        // here does not hurt and will be "used" to make the code in the
-        // handler  compilable although the code will never be executed.
-        ini_parser_error e("", "", 0); ignore_unused(e);
-
         BOOST_TRY {
             write_ini(stream, pt, flags);
         }
         BOOST_CATCH (ini_parser_error &e) {
+    #ifndef BOOST_NO_EXCEPTIONS
             BOOST_PROPERTY_TREE_THROW(ini_parser_error(
                 e.message(), filename, e.line()));
+    #endif
         }
         BOOST_CATCH_END
     }
