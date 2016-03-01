@@ -1,9 +1,9 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_WIDE_ENCODING_HPP
 #define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_WIDE_ENCODING_HPP
 
+#include <boost/assert.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
-#include <cassert>
 #include <utility>
 
 namespace boost { namespace property_tree {
@@ -72,7 +72,7 @@ namespace boost { namespace property_tree {
         }
 
         wchar_t to_internal_trivial(wchar_t c) const {
-            assert(!is_surrogate_high(c) && !is_surrogate_low(c));
+            BOOST_ASSERT(!is_surrogate_high(c) && !is_surrogate_low(c));
             return c;
         }
 
@@ -97,6 +97,14 @@ namespace boost { namespace property_tree {
             feed_codepoint(codepoint, transcoded_fn, test_utf16());
         }
 
+        template <typename Iterator, typename Sentinel>
+        void skip_introduction(Iterator& cur, Sentinel end) const {
+            // Endianness is already decoded at this level.
+            if (cur != end && *cur == 0xfeff) {
+                ++cur;
+            }
+        }
+
     private:
         struct DoNothing {
             void operator ()(wchar_t) const {}
@@ -104,7 +112,7 @@ namespace boost { namespace property_tree {
 
         template <typename Iterator, typename Sentinel, typename TranscodedFn,
                   typename EncodingErrorFn>
-        void transcode_codepoint(Iterator& cur, Sentinel end,
+        void transcode_codepoint(Iterator& cur, Sentinel,
                                  TranscodedFn transcoded_fn,
                                  EncodingErrorFn error_fn,
                                  is_utf16<false>) const {
@@ -131,6 +139,9 @@ namespace boost { namespace property_tree {
             transcoded_fn(c);
             ++cur;
             if (is_surrogate_high(c)) {
+                if (cur == end) {
+                    error_fn();
+                }
                 c = *cur;
                 if (!is_surrogate_low(c)) {
                     error_fn();

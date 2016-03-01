@@ -1,9 +1,9 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_NARROW_ENCODING_HPP
 #define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_NARROW_ENCODING_HPP
 
+#include <boost/assert.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
-#include <cassert>
 #include <utility>
 
 namespace boost { namespace property_tree {
@@ -68,7 +68,7 @@ namespace boost { namespace property_tree {
         }
 
         char to_internal_trivial(char c) const {
-            assert(c <= 0x7f);
+            BOOST_ASSERT(static_cast<unsigned char>(c) <= 0x7f);
             return c;
         }
 
@@ -125,6 +125,15 @@ namespace boost { namespace property_tree {
                 transcoded_fn(trail(codepoint >> 12));
                 transcoded_fn(trail(codepoint >> 6));
                 transcoded_fn(trail(codepoint));
+            }
+        }
+
+        template <typename Iterator, typename Sentinel>
+        void skip_introduction(Iterator& cur, Sentinel end) const {
+            if (cur != end && static_cast<unsigned char>(*cur) == 0xef) {
+                if (++cur == end) return;
+                if (++cur == end) return;
+                if (++cur == end) return;
             }
         }
 

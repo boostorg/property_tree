@@ -1,6 +1,7 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_STANDARD_CALLBACKS_HPP
 #define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_STANDARD_CALLBACKS_HPP
 
+#include <boost/assert.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <vector>
 
@@ -116,7 +117,8 @@ namespace boost { namespace property_tree {
                 return *stack.back().t;
             }
             case object:
-                assert(false); // must start with string, i.e. call new_value
+            default:
+                BOOST_ASSERT(false); // must start with string, i.e. call new_value
             case key: {
                 l.t->push_back(std::make_pair(key_buffer, Ptree()));
                 l.k = object;
@@ -128,7 +130,6 @@ namespace boost { namespace property_tree {
                 stack.pop_back();
                 return new_tree();
             }
-            assert(false);
         }
         string& new_value() {
             if (stack.empty()) return new_tree().data();
