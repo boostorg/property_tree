@@ -20,6 +20,37 @@
 namespace boost { namespace property_tree { namespace json_parser
 {
 
+    /*
+     * Add specialized checks for the case where the character
+     * class is char or unsigned char. The specialized check avoids
+     * comparing to <= 0xFF which triggers a GCC warning about the
+     * fact that the check is always true.
+     *
+     * See https://svn.boost.org/trac/boost/ticket/5598
+     */
+    namespace detail {
+      template <class Ch>
+      bool check_is_ascii(const Ch c)
+      {
+        return (c == 0x20 || c == 0x21 || (c >= 0x23 && c <= 0x2E) ||
+               (c >= 0x30 && c <= 0x5B) || (c >= 0x5D && c <= 0xFF));
+      }
+
+      template <>
+      bool check_is_ascii(const char c)
+      {
+        return (c == 0x20 || c == 0x21 || (c >= 0x23 && c <= 0x2E) ||
+               (c >= 0x30 && c <= 0x5B) || c >= 0x5D);
+      }
+
+      template <>
+      bool check_is_ascii(const unsigned char c)
+      {
+        return (c == 0x20 || c == 0x21 || (c >= 0x23 && c <= 0x2E) ||
+               (c >= 0x30 && c <= 0x5B) || c >= 0x5D);
+      }
+    }
+
     // Create necessary escape sequences from illegal characters
     template<class Ch>
     std::basic_string<Ch> create_escapes(const std::basic_string<Ch> &s)
@@ -30,12 +61,10 @@ namespace boost { namespace property_tree { namespace json_parser
         while (b != e)
         {
             typedef typename make_unsigned<Ch>::type UCh;
-            UCh c(*b);
             // This assumes an ASCII superset. But so does everything in PTree.
             // We escape everything outside ASCII, because this code can't
             // handle high unicode characters.
-            if (c == 0x20 || c == 0x21 || (c >= 0x23 && c <= 0x2E) ||
-                (c >= 0x30 && c <= 0x5B) || (c >= 0x5D && c <= 0xFF))
+            if (detail::check_is_ascii(*b))
                 result += *b;
             else if (*b == Ch('\b')) result += Ch('\\'), result += Ch('b');
             else if (*b == Ch('\f')) result += Ch('\\'), result += Ch('f');
