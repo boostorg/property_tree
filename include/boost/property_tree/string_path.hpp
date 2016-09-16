@@ -272,6 +272,25 @@ namespace boost { namespace property_tree
         t /= p2;
         return t;
     }
+	
+    template <typename String, typename Translator> inline
+    string_path<String, Translator> operator /(
+                                  string_path<String, Translator> p1,
+                                  const String &p2)
+    {
+        p1 /= p2;
+        return p1;
+    }
+
+    template <typename String, typename Translator> inline
+    string_path<String, Translator> operator /(
+                                  const String &p1,
+                                  const string_path<String, Translator> &p2)
+    {
+        string_path<String, Translator> t(p1);
+        t /= p2;
+        return t;
+    }
 
 }}
 
