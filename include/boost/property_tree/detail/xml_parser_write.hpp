@@ -114,9 +114,10 @@ namespace boost { namespace property_tree { namespace xml_parser
                 // Write attributes
                 if (optional<const Ptree &> attribs = pt.get_child_optional(xmlattr<Str>()))
                 {
+                    bool attrInSeparateLine = want_pretty && settings.attr_separate_line;
                     for (It it = attribs.get().begin(); it != attribs.get().end(); ++it)
                     {
-                        if (want_pretty && has_attrs_only)
+                        if (attrInSeparateLine)
                         {
                             stream << Ch('\n');
                             write_xml_indent(stream,indent+1,settings);
@@ -132,7 +133,7 @@ namespace boost { namespace property_tree { namespace xml_parser
                             it->second.template get_value<Str>())
                         << Ch('"');
                     }
-                    if (want_pretty && has_attrs_only)
+                    if (attrInSeparateLine)
                     {
                         stream << Ch('\n');
                         write_xml_indent(stream,indent,settings);
