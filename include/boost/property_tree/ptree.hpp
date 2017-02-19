@@ -89,9 +89,18 @@ namespace boost { namespace property_tree
         /** Creates a node with no children and a copy of the given data. */
         explicit basic_ptree(const data_type &data);
         basic_ptree(const self_type &rhs);
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        basic_ptree(self_type &&rv);
+#endif
+        
         ~basic_ptree();
         /** Basic guarantee only. */
         self_type &operator =(const self_type &rhs);
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        self_type &operator =(self_type &&rv);
+#endif
 
         /** Swap with other tree. Only constant-time and nothrow if the
          * data type's swap is.

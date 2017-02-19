@@ -194,6 +194,15 @@ namespace boost { namespace property_tree
     {
     }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C> inline
+    basic_ptree<K, D, C>::basic_ptree(basic_ptree<K, D, C> &&rv)
+        : m_data(std::move(rv.m_data)),
+          m_children(new typename subs::base_container(std::move(subs::ch(&rv))))
+    {
+    }
+#endif
+
     template<class K, class D, class C>
     basic_ptree<K, D, C> &
         basic_ptree<K, D, C>::operator =(const basic_ptree<K, D, C> &rhs)
@@ -201,6 +210,16 @@ namespace boost { namespace property_tree
         self_type(rhs).swap(*this);
         return *this;
     }
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C>
+    basic_ptree<K, D, C> &
+        basic_ptree<K, D, C>::operator =(basic_ptree<K, D, C> &&rv)
+    {
+        rv.swap(*this);
+        return *this;
+    }
+#endif
 
     template<class K, class D, class C>
     basic_ptree<K, D, C>::~basic_ptree()
