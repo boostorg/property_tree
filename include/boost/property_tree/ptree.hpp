@@ -135,6 +135,14 @@ namespace boost { namespace property_tree
          */
         iterator insert(iterator where, const value_type &value);
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        /** Insert a copy of the given tree with its key just before the given
+         * position in this node. This operation invalidates no iterators.
+         * @return An iterator to the newly created child.
+         */
+        iterator insert(iterator where, value_type &&value);
+#endif
+
         /** Range insert. Equivalent to:
          * @code
          * for(; first != last; ++first) insert(where, *first);

@@ -348,6 +348,15 @@ namespace boost { namespace property_tree
         return iterator(subs::ch(this).insert(where.base(), value).first);
     }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C> inline
+    typename basic_ptree<K, D, C>::iterator
+    basic_ptree<K, D, C>::insert(iterator where, value_type &&value)
+    {
+        return iterator(subs::ch(this).insert(where.base(), std::move(value)).first);
+    }
+#endif
+
     template<class K, class D, class C>
     template<class It> inline
     void basic_ptree<K, D, C>::insert(iterator where, It first, It last)
