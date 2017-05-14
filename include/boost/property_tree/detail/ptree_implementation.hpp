@@ -376,6 +376,15 @@ namespace boost { namespace property_tree
         return iterator(subs::ch(this).push_front(value).first);
     }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C> inline
+    typename basic_ptree<K, D, C>::iterator
+        basic_ptree<K, D, C>::push_front(value_type &&value)
+    {
+        return iterator(subs::ch(this).push_front(std::move(value)).first);
+    }
+#endif
+
     template<class K, class D, class C> inline
     typename basic_ptree<K, D, C>::iterator
         basic_ptree<K, D, C>::push_back(const value_type &value)

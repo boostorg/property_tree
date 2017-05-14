@@ -137,8 +137,8 @@ static void reset_counters()
 //     return a;
 // }
 
-// Test copy/move of the entire test_container
-static void test_container()
+// Test copy/move constructor of the entire test_container
+static void test_constructor()
 {
     test_ptree a("value");
     
@@ -177,10 +177,34 @@ static void test_push_back()
     BOOST_CHECK(data_type::copy_assigments == 0);
 }
 
+static void test_push_front()
+{
+    test_ptree tree;
+    
+    // push_back - copy
+    test_ptree::value_type child1("key1", test_ptree("c1"));
+
+    reset_counters();
+    tree.push_front(child1);
+    
+    BOOST_CHECK(data_type::copy_ctors == 1);
+    BOOST_CHECK(key_type::copy_ctors == 1);
+
+    // push_back - move
+    test_ptree::value_type child2("key2", test_ptree("c2"));
+
+    reset_counters();
+    tree.push_front(std::move(child2));
+    
+    BOOST_CHECK(data_type::copy_ctors == 0);
+    BOOST_CHECK(data_type::copy_assigments == 0);
+}
+
 int test_main(int, char *[])
 {
-    test_container();
+    test_constructor();
     test_push_back();
+    test_push_front();
     
     return 0;
 }

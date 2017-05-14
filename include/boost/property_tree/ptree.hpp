@@ -159,8 +159,14 @@ namespace boost { namespace property_tree
         /** Equivalent to insert(begin(), value). */
         iterator push_front(const value_type &value);
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        /** Equivalent to insert(begin(), value). */
+        iterator push_front(value_type &&value);
+#endif
+
         /** Equivalent to insert(end(), value). */
         iterator push_back(const value_type &value);
+
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
         /** Equivalent to insert(end(), value). */
         iterator push_back(value_type &&value);
