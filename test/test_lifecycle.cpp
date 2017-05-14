@@ -175,8 +175,6 @@ static void test_push_back()
     
     BOOST_CHECK(data_type::copy_ctors == 0);
     BOOST_CHECK(data_type::copy_assigments == 0);
-    BOOST_CHECK(key_type::copy_ctors == 0);
-    BOOST_CHECK(key_type::copy_assigments == 0);
 }
 
 int test_main(int, char *[])
