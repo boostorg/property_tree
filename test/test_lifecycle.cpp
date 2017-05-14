@@ -154,9 +154,35 @@ static void test_container()
     BOOST_CHECK(data_type::copy_assigments == 0);
 }
 
+static void test_push_back()
+{
+    test_ptree tree;
+    
+    // push_back - copy
+    test_ptree::value_type child1("key1", test_ptree("c1"));
+
+    reset_counters();
+    tree.push_back(child1);
+    
+    BOOST_CHECK(data_type::copy_ctors == 1);
+    BOOST_CHECK(key_type::copy_ctors == 1);
+
+    // push_back - move
+    test_ptree::value_type child2("key2", test_ptree("c2"));
+
+    reset_counters();
+    tree.push_back(std::move(child2));
+    
+    BOOST_CHECK(data_type::copy_ctors == 0);
+    BOOST_CHECK(data_type::copy_assigments == 0);
+    BOOST_CHECK(key_type::copy_ctors == 0);
+    BOOST_CHECK(key_type::copy_assigments == 0);
+}
+
 int test_main(int, char *[])
 {
     test_container();
+    test_push_back();
     
     return 0;
 }
