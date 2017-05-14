@@ -137,7 +137,6 @@ static void reset_counters()
 //     return a;
 // }
 
-// Test copy/move constructor of the entire test_container
 static void test_constructor()
 {
     test_ptree a("value");
@@ -150,6 +149,23 @@ static void test_constructor()
     // Move - expect the vaule not to be copied
     reset_counters();
     test_ptree c = std::move(a);
+    BOOST_CHECK(data_type::copy_ctors == 0);
+    BOOST_CHECK(data_type::copy_assigments == 0);
+}
+
+static void test_assignment()
+{
+    test_ptree a("a");
+    test_ptree b("a");
+    
+    // Copy
+    reset_counters();
+    b = a;
+    BOOST_CHECK(data_type::copy_ctors == 1);
+
+    // Move
+    reset_counters();
+    b = std::move(a);
     BOOST_CHECK(data_type::copy_ctors == 0);
     BOOST_CHECK(data_type::copy_assigments == 0);
 }
@@ -229,6 +245,7 @@ int test_main(int, char *[])
     test_push_back();
     test_push_front();
     test_insert();
+    test_assignment();
     
     return 0;
 }
