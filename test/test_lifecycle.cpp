@@ -17,7 +17,7 @@
 #include <boost/test/minimal.hpp>
 
 
-template<typename Tag>
+template<typename TAG>
 struct lifecycle_counter
 {
     static int default_ctors;
@@ -65,7 +65,7 @@ struct lifecycle_counter
     }
     
     lifecycle_counter(lifecycle_counter&& o)
-        : m_value(o.m_value)
+        : m_value(std::move(o.m_value))
     {
         move_ctors++;
     }
@@ -79,17 +79,19 @@ struct lifecycle_counter
     {
         m_value = o.m_value;
         copy_assigments++;
+        return *this;
     }
     
     lifecycle_counter& operator=(lifecycle_counter&& o)
     {
         m_value = o.m_value;
         move_assignments++;
+        return *this;
     }
     
     bool operator == (const lifecycle_counter& o) const
     {
-        return m_value = o.m_value;
+        return m_value == o.m_value;
     }
 
     bool operator < (const lifecycle_counter& o) const
@@ -122,10 +124,30 @@ struct path_of<key_type>
     
 }}
 
-static void test_container()
+static void reset_counters()
+{
+    key_type::reset_counters();
+    data_type::reset_counters();
+}
+
+static test_ptree make_one_element_tree()
 {
     test_ptree a;
     a.push_back({"key", test_ptree("value")});
+    return a;
+}
+
+// Test copy/move of the entire test_container
+static void test_container()
+{
+    test_ptree a = make_one_element_tree();
+    
+    // Copy - expect key and value to be copied
+    reset_counters();
+    test_ptree b = a;
+    
+    BOOST_CHECK(key_type::copy_ctors == 1);
+    BOOST_CHECK(data_type::copy_ctors == 1);
     
 }
 
@@ -136,4 +158,4 @@ int test_main(int, char *[])
     return 0;
 }
 
-#endif
+#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
