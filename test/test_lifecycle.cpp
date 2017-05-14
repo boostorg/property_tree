@@ -130,25 +130,28 @@ static void reset_counters()
     data_type::reset_counters();
 }
 
-static test_ptree make_one_element_tree()
-{
-    test_ptree a;
-    a.push_back({"key", test_ptree("value")});
-    return a;
-}
+// static test_ptree make_one_element_tree()
+// {
+//     test_ptree a;
+//     a.push_back({"key", test_ptree("value")});
+//     return a;
+// }
 
 // Test copy/move of the entire test_container
 static void test_container()
 {
-    test_ptree a = make_one_element_tree();
+    test_ptree a("value");
     
-    // Copy - expect key and value to be copied
+    // Copy - expect value to be copied
     reset_counters();
     test_ptree b = a;
-    
-    BOOST_CHECK(key_type::copy_ctors == 1);
     BOOST_CHECK(data_type::copy_ctors == 1);
     
+    // Move - expect the vaule not to be copied
+    reset_counters();
+    test_ptree c = std::move(a);
+    BOOST_CHECK(data_type::copy_ctors == 0);
+    BOOST_CHECK(data_type::copy_assigments == 0);
 }
 
 int test_main(int, char *[])
