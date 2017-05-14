@@ -24,4 +24,5 @@ test-suite "property_tree"
      [ run test_xml_parser_rapidxml.cpp ]
 
      [ run test_multi_module1.cpp test_multi_module2.cpp ]
+     [ run test_lifecycle.cpp ]
 ;

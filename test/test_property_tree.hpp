@@ -253,28 +253,6 @@ void test_pushpop(PTREE *)
     pt.pop_front();
     //BOOST_CHECK(PTREE::debug_get_instances_count() == 5);
     BOOST_CHECK(pt.empty());
-
-    // Copy push_back vs move push_back
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-    {
-    PTREE::value_type to_copy;
-    to_copy.second.push_back(std::make_pair(T("key"), PTREE(T("data"))));
-    
-    PTREE::value_type to_move;
-    to_move.second.push_back(std::make_pair(T("key"), PTREE(T("data"))));
-    
-    
-    PTREE receiver;
-    receiver.push_back(to_copy);
-    receiver.push_back(std::move(to_move));
-    
-    BOOST_CHECK(to_copy.second.size() == 1);
-    BOOST_CHECK(to_move.second.empty());
-    
-    BOOST_CHECK(receiver.size() == 2);
-    }
-#endif
-
 }
 
 void test_container_iteration(PTREE *)
