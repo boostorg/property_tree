@@ -384,6 +384,13 @@ namespace boost { namespace property_tree
     }
 
     template<class K, class D, class C> inline
+    typename basic_ptree<K, D, C>::iterator
+        basic_ptree<K, D, C>::push_back(value_type &&value)
+    {
+        return iterator(subs::ch(this).push_back(std::move(value)).first);
+    }
+
+    template<class K, class D, class C> inline
     void basic_ptree<K, D, C>::pop_front()
     {
         subs::ch(this).pop_front();
