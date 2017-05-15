@@ -5,6 +5,7 @@
 
 #include <boost/ref.hpp>
 #include <boost/bind.hpp>
+#include <boost/bind/placeholders.hpp>
 #include <boost/format.hpp>
 
 #include <iterator>
@@ -214,7 +215,7 @@ namespace boost { namespace property_tree {
         void process_codepoint(Sentinel end, EncodingErrorFn error_fn) {
             encoding.transcode_codepoint(cur, end,
                 boost::bind(&Callbacks::on_code_unit,
-                            boost::ref(callbacks), _1),
+                            boost::ref(callbacks), placeholders::_1),
                 error_fn);
         }
 
@@ -517,7 +518,7 @@ namespace boost { namespace property_tree {
         void feed(unsigned codepoint) {
             encoding.feed_codepoint(codepoint,
                                     boost::bind(&Callbacks::on_code_unit,
-                                                boost::ref(callbacks), _1));
+                                                boost::ref(callbacks), placeholders::_1));
         }
 
         Callbacks& callbacks;
