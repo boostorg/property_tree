@@ -117,7 +117,6 @@ namespace boost { namespace property_tree {
                 return *stack.back().t;
             }
             case object:
-            default:
                 BOOST_ASSERT(false); // must start with string, i.e. call new_value
             case key: {
                 l.t->push_back(std::make_pair(key_buffer, Ptree()));
@@ -130,6 +129,7 @@ namespace boost { namespace property_tree {
                 stack.pop_back();
                 return new_tree();
             }
+            BOOST_ASSERT(false);
         }
         string& new_value() {
             if (stack.empty()) return new_tree().data();
