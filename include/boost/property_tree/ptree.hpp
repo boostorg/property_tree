@@ -486,6 +486,13 @@ namespace boost { namespace property_tree
         template<class Type>
         self_type &add(const path_type &path, const Type &value);
 
+        /** Proof Of Concept splice operation
+         * Author: Seth Heeren
+         * Documentation TODO, additional overloads
+         *
+         * reviewer suggestion: Joaquín M López Muñoz
+         */
+        void splice(const_iterator position, self_type& other);
     private:
         // Hold the data of this node
         data_type m_data;

@@ -879,6 +879,11 @@ namespace boost { namespace property_tree
                    typename translator_between<data_type, Type>::type());
     }
 
+    template<class K, class D, class C>
+    void basic_ptree<K, D, C>::splice(const_iterator position, self_type& other)
+    {
+        subs::ch(this).splice(position.base(), subs::ch(&other));
+    }
 
     template<class K, class D, class C>
     basic_ptree<K, D, C> *
