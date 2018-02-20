@@ -66,10 +66,11 @@ namespace boost { namespace property_tree { namespace info_parser
     bool is_ascii_space(Ch c)
     {
         // Everything outside ASCII is not space.
+        using namespace std;
         unsigned n = c;
         if (n > 127)
             return false;
-        return std::isspace(c) != 0;
+        return isspace(c) != 0;
     }
 
     // Advance pointer past whitespace
