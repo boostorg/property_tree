@@ -109,7 +109,7 @@ namespace boost { namespace property_tree
     };
     template <class K, class D, class C>
     class basic_ptree<K, D, C>::reverse_iterator
-        : public boost::reverse_iterator<iterator>
+        : public boost::reverse_iterator<basic_ptree<K, D, C>::iterator>
     {
     public:
         reverse_iterator() {}
@@ -119,7 +119,7 @@ namespace boost { namespace property_tree
     };
     template <class K, class D, class C>
     class basic_ptree<K, D, C>::const_reverse_iterator
-        : public boost::reverse_iterator<const_iterator>
+        : public boost::reverse_iterator<basic_ptree<K, D, C>::const_iterator>
     {
     public:
         const_reverse_iterator() {}
