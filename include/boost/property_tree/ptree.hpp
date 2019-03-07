@@ -2,8 +2,8 @@
 // Copyright (C) 2002-2006 Marcin Kalicinski
 // Copyright (C) 2009 Sebastian Redl
 //
-// Distributed under the Boost Software License, Version 1.0. 
-// (See accompanying file LICENSE_1_0.txt or copy at 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 // For more information, see www.boost.org
@@ -77,6 +77,9 @@ namespace boost { namespace property_tree
         // Associative view types
         class assoc_iterator;
         class const_assoc_iterator;
+
+        typedef std::pair<assoc_iterator, assoc_iterator> range_type;
+        typedef std::pair<const_assoc_iterator, const_assoc_iterator> const_range_type;
 
         // Property tree view types
         typedef typename path_of<Key>::type          path_type;
@@ -208,11 +211,11 @@ namespace boost { namespace property_tree
         const_assoc_iterator find(const key_type &key) const;
 
         /** Find the range of children that have the given key. */
-        std::pair<assoc_iterator, assoc_iterator>
+        range_type
             equal_range(const key_type &key);
 
         /** Find the range of children that have the given key. */
-        std::pair<const_assoc_iterator, const_assoc_iterator>
+        const_range_type
             equal_range(const key_type &key) const;
 
         /** Count the number of direct children with the given key. */
