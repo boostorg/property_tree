@@ -89,9 +89,18 @@ namespace boost { namespace property_tree
         /** Creates a node with no children and a copy of the given data. */
         explicit basic_ptree(const data_type &data);
         basic_ptree(const self_type &rhs);
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        basic_ptree(self_type &&rv);
+#endif
+        
         ~basic_ptree();
         /** Basic guarantee only. */
         self_type &operator =(const self_type &rhs);
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        self_type &operator =(self_type &&rv);
+#endif
 
         /** Swap with other tree. Only constant-time and nothrow if the
          * data type's swap is.
@@ -126,6 +135,14 @@ namespace boost { namespace property_tree
          */
         iterator insert(iterator where, const value_type &value);
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        /** Insert a copy of the given tree with its key just before the given
+         * position in this node. This operation invalidates no iterators.
+         * @return An iterator to the newly created child.
+         */
+        iterator insert(iterator where, value_type &&value);
+#endif
+
         /** Range insert. Equivalent to:
          * @code
          * for(; first != last; ++first) insert(where, *first);
@@ -150,9 +167,18 @@ namespace boost { namespace property_tree
         /** Equivalent to insert(begin(), value). */
         iterator push_front(const value_type &value);
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        /** Equivalent to insert(begin(), value). */
+        iterator push_front(value_type &&value);
+#endif
+
         /** Equivalent to insert(end(), value). */
         iterator push_back(const value_type &value);
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        /** Equivalent to insert(end(), value). */
+        iterator push_back(value_type &&value);
+#endif
         /** Equivalent to erase(begin()). */
         void pop_front();
 

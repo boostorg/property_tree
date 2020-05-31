@@ -194,6 +194,15 @@ namespace boost { namespace property_tree
     {
     }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C> inline
+    basic_ptree<K, D, C>::basic_ptree(basic_ptree<K, D, C> &&rv)
+        : m_data(std::move(rv.m_data)),
+          m_children(new typename subs::base_container(std::move(subs::ch(&rv))))
+    {
+    }
+#endif
+
     template<class K, class D, class C>
     basic_ptree<K, D, C> &
         basic_ptree<K, D, C>::operator =(const basic_ptree<K, D, C> &rhs)
@@ -201,6 +210,16 @@ namespace boost { namespace property_tree
         self_type(rhs).swap(*this);
         return *this;
     }
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C>
+    basic_ptree<K, D, C> &
+        basic_ptree<K, D, C>::operator =(basic_ptree<K, D, C> &&rv)
+    {
+        rv.swap(*this);
+        return *this;
+    }
+#endif
 
     template<class K, class D, class C>
     basic_ptree<K, D, C>::~basic_ptree()
@@ -329,6 +348,15 @@ namespace boost { namespace property_tree
         return iterator(subs::ch(this).insert(where.base(), value).first);
     }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C> inline
+    typename basic_ptree<K, D, C>::iterator
+    basic_ptree<K, D, C>::insert(iterator where, value_type &&value)
+    {
+        return iterator(subs::ch(this).insert(where.base(), std::move(value)).first);
+    }
+#endif
+
     template<class K, class D, class C>
     template<class It> inline
     void basic_ptree<K, D, C>::insert(iterator where, It first, It last)
@@ -357,12 +385,30 @@ namespace boost { namespace property_tree
         return iterator(subs::ch(this).push_front(value).first);
     }
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C> inline
+    typename basic_ptree<K, D, C>::iterator
+        basic_ptree<K, D, C>::push_front(value_type &&value)
+    {
+        return iterator(subs::ch(this).push_front(std::move(value)).first);
+    }
+#endif
+
     template<class K, class D, class C> inline
     typename basic_ptree<K, D, C>::iterator
         basic_ptree<K, D, C>::push_back(const value_type &value)
     {
         return iterator(subs::ch(this).push_back(value).first);
     }
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    template<class K, class D, class C> inline
+    typename basic_ptree<K, D, C>::iterator
+        basic_ptree<K, D, C>::push_back(value_type &&value)
+    {
+        return iterator(subs::ch(this).push_back(std::move(value)).first);
+    }
+#endif
 
     template<class K, class D, class C> inline
     void basic_ptree<K, D, C>::pop_front()

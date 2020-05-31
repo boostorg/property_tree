@@ -91,6 +91,18 @@ void test_constructor_destructor_assignment(PTREE *)
         BOOST_CHECK(pt1 == *pt3);
         //BOOST_CHECK(PTREE::debug_get_instances_count() == 15);
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        // Test move constructor
+        PTREE pt4(std::move(pt1));
+        
+        BOOST_CHECK(pt4 == *pt2);
+        BOOST_CHECK(pt1.empty());
+        
+        // Test move assignment
+        pt1 = std::move(pt4);
+        BOOST_CHECK(pt1 == *pt2);
+        BOOST_CHECK(pt4.empty());
+#endif
         // Destroy
         delete pt2;
         //BOOST_CHECK(PTREE::debug_get_instances_count() == 10);
@@ -241,7 +253,6 @@ void test_pushpop(PTREE *)
     pt.pop_front();
     //BOOST_CHECK(PTREE::debug_get_instances_count() == 5);
     BOOST_CHECK(pt.empty());
-
 }
 
 void test_container_iteration(PTREE *)
