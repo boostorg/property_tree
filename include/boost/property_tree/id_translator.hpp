@@ -12,8 +12,8 @@
 #define BOOST_PROPERTY_TREE_ID_TRANSLATOR_HPP_INCLUDED
 
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/property_tree/detail/optional_type.hpp>
 
-#include <boost/optional.hpp>
 #include <string>
 
 namespace boost { namespace property_tree
@@ -26,8 +26,8 @@ namespace boost { namespace property_tree
         typedef T internal_type;
         typedef T external_type;
 
-        boost::optional<T> get_value(const T &v) { return v; }
-        boost::optional<T> put_value(const T &v) { return v; }
+        optional<T> get_value(const T &v) { return v; }
+        optional<T> put_value(const T &v) { return v; }
     };
 
     // This is the default translator whenever you get two equal types.

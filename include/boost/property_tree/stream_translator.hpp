@@ -12,9 +12,8 @@
 #define BOOST_PROPERTY_TREE_STREAM_TRANSLATOR_HPP_INCLUDED
 
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/property_tree/detail/optional_type.hpp>
 
-#include <boost/optional.hpp>
-#include <boost/optional/optional_io.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/decay.hpp>
 #include <boost/type_traits/integral_constant.hpp>
@@ -191,24 +190,24 @@ namespace boost { namespace property_tree
             : m_loc(loc)
         {}
 
-        boost::optional<E> get_value(const internal_type &v) {
+        optional<E> get_value(const internal_type &v) {
             std::basic_istringstream<Ch, Traits, Alloc> iss(v);
             iss.imbue(m_loc);
             E e;
             customized::extract(iss, e);
             if(iss.fail() || iss.bad() || iss.get() != Traits::eof()) {
-                return boost::optional<E>();
+                return optional<E>();
             }
             return e;
         }
-        boost::optional<internal_type> put_value(const E &v) {
+        optional<internal_type> put_value(const E &v) {
             std::basic_ostringstream<Ch, Traits, Alloc> oss;
             oss.imbue(m_loc);
             customized::insert(oss, v);
             if(oss) {
                 return oss.str();
             }
-            return boost::optional<internal_type>();
+            return optional<internal_type>();
         }
 
     private:

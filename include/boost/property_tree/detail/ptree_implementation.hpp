@@ -664,7 +664,7 @@ namespace boost { namespace property_tree
     typename boost::enable_if<detail::is_translator<Translator>, Type>::type
     basic_ptree<K, D, C>::get_value(Translator tr) const
     {
-        if(boost::optional<Type> o = get_value_optional<Type>(tr)) {
+        if(optional<Type> o = get_value_optional<Type>(tr)) {
             return *o;
         }
         BOOST_PROPERTY_TREE_THROW(ptree_bad_data(
