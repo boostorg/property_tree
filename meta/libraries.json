@@ -12,5 +12,6 @@
     ],
     "maintainers": [
         "Sebastian Redl <sebastian.redl -at- getdesigned.at>"
-    ]
+    ],
+    "cxxstd": "03"
 }
