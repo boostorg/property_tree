@@ -175,6 +175,9 @@ jobs:
       - name: Setup Boost
         shell: cmd
         run: |
+          locale-gen fr_FR
+          locale-gen en_GB
+          locale -a
           echo GITHUB_REPOSITORY: %GITHUB_REPOSITORY%
           for /f %%i in ("%GITHUB_REPOSITORY%") do set LIBRARY=%%~nxi
           echo LIBRARY: %LIBRARY%
