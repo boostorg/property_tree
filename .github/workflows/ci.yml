@@ -119,10 +119,13 @@ jobs:
 
       - name: Setup Boost
         run: |
-          sudo ls -al /usr/sbin/l*
-          sudo locale-gen fr_FR
-          sudo locale-gen en_GB
-          sudo locale -a
+          if [[ $(uname) =~ [Ll]inux ]]; then
+            echo Installing locales for ${TRAVIS_OS_NAME} ...
+            sudo /usr/sbin/locale-gen fr_FR
+            sudo /usr/sbin/locale-gen en_GB
+            sudo locale -a
+            echo ...done with locales
+          fi
           echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
           LIBRARY=${GITHUB_REPOSITORY#*/}
           echo LIBRARY: $LIBRARY
