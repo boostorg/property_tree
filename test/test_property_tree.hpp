@@ -1204,11 +1204,19 @@ void test_serialization(PTREE *)
     // Test XML archives
     {
         std::stringstream stream;
-        boost::archive::xml_oarchive oa(stream);
-        oa & boost::serialization::make_nvp("pt", pt1);
-        boost::archive::xml_iarchive ia(stream);
+
+        {
+            boost::archive::xml_oarchive oa(stream);
+            oa & boost::serialization::make_nvp("pt", pt1);
+        }
+
         PTREE pt2;
-        ia & boost::serialization::make_nvp("pt", pt2);
+
+        {
+            boost::archive::xml_iarchive ia(stream);
+            ia & boost::serialization::make_nvp("pt", pt2);
+        }
+
         BOOST_CHECK(pt1 == pt2);
     }
 
