@@ -13,10 +13,20 @@ list(FILTER BOOST_PROPERTY_TREE_TESTS_FILES EXCLUDE REGEX "^${CMAKE_CURRENT_SOUR
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "" FILES ${BOOST_PROPERTY_TREE_TESTS_FILES})
 
-add_executable(test-multi test_multi_module1.cpp test_multi_module2.cpp)
-target_include_directories(test-multi PRIVATE .)
-target_link_libraries(test-multi PRIVATE Boost::property_tree Boost::serialization Boost::unit_test_framework)
-add_test(NAME property_tree-test-multi COMMAND test-multi)
+macro(PTREE_TEST name)
+    add_executable("${name}" ${ARGN})
+    target_include_directories("${name}" PRIVATE .)
+    target_link_libraries("${name}" PRIVATE Boost::property_tree Boost::serialization Boost::unit_test_framework)
+    add_test(NAME "property_tree-${name}" COMMAND "${name}")
+endmacro()
+
+PTREE_TEST(test-multi test_multi_module1.cpp test_multi_module2.cpp)
+PTREE_TEST(test-property-tree test_property_tree.cpp test_property_tree.hpp)
+PTREE_TEST(test-info-parser test_info_parser.cpp)
+PTREE_TEST(test-json-parser test_json_parser.cpp)
+PTREE_TEST(test-json-parser2 test_json_parser2.cpp)
+PTREE_TEST(test-ini-parser test_ini_parser.cpp)
+PTREE_TEST(test-xml-parser-rapidxml test_xml_parser_rapidxml.cpp)
 
 #[[
 add_executable(tests ${BOOST_PROPERTY_TREE_TESTS_FILES})
