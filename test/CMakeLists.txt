@@ -16,7 +16,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "" FILES ${BOOST_PROPERTY_T
 macro(PTREE_TEST name)
     add_executable("${name}" ${ARGN})
     target_include_directories("${name}" PRIVATE .)
-    target_link_libraries("${name}" PRIVATE Boost::property_tree Boost::serialization Boost::unit_test_framework)
+    target_link_libraries("${name}" PRIVATE Boost::property_tree Boost::serialization)
     add_test(NAME "property_tree-${name}" COMMAND "${name}")
 endmacro()
 

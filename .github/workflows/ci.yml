@@ -154,7 +154,24 @@ jobs:
       - name: Run tests
         run: |
           cd ../boost-root
-          ./b2 -j3 libs/$LIBRARY/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} variant=debug,release
+          toolsets=$(sed 's/,/ /g' <<<"${{matrix.toolset}}")
+          standards=$(sed 's/,/ /g' <<<"${{matrix.cxxstd}}")
+          variants="debug release"
+          err=0
+          for toolset in ${toolsets} ; do
+            for standard in ${standards} ; do
+              for variant in ${variants} ; do
+                if [[ err -ne 0 ]] ; then
+                  echo "skipping: ${toolset} ${standard} ${variant}"
+                else
+                  echo "running: ${toolset} ${standard} ${variant}"
+                  ./b2 -j3 libs/$LIBRARY/test toolset=${toolset} cxxstd=${standard} variant=${variant}
+                  err=$?
+                fi
+              done
+            done
+          done
+          [[ $err -ne 0 ]] && false || true
 
   windows:
     strategy:
@@ -165,14 +182,17 @@ jobs:
             cxxstd: "14,17,latest"
             addrmd: 32,64
             os: windows-2016
+            cxxflags: ""
           - toolset: msvc-14.2
             cxxstd: "14,17,latest"
             addrmd: 32,64
             os: windows-2019
+            cxxflags: ""
           - toolset: gcc
             cxxstd: "03,11,14,17,2a"
             addrmd: 64
             os: windows-2019
+            cxxflags: "cxxflags=-Wa,-mbig-obj"
 
     runs-on: ${{matrix.os}}
 
@@ -202,7 +222,27 @@ jobs:
           b2 -d0 headers
 
       - name: Run tests
-        shell: cmd
+        shell: bash
         run: |
           cd ../boost-root
-          b2 -j3 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release
+          toolsets=$(sed 's/,/ /g' <<<"${{matrix.toolset}}")
+          standards=$(sed 's/,/ /g' <<<"${{matrix.cxxstd}}")
+          address_models=$(sed 's/,/ /g' <<<"${{matrix.addrmd}}")
+          variants="debug release"
+          err=0
+          for toolset in ${toolsets} ; do
+            for standard in ${standards} ; do
+              for address_model in ${address_models} ; do
+                for variant in ${variants} ; do
+                  if [[ err -ne 0 ]] ; then
+                    echo "skipping: ${toolset} ${standard} ${address_model} ${variant}"
+                  else
+                    echo "running: ${toolset} ${standard} ${address_model} ${variant}"
+                    ./b2 -j3 ${{matrix.cxxflags}} libs/$LIBRARY/test toolset=${toolset} cxxstd=${standard} address-model=${address_model} variant=${variant}
+                    err=$?
+                  fi
+                done
+              done
+            done
+          done
+          [[ $err -ne 0 ]] && false || true

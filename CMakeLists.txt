@@ -79,9 +79,7 @@ elseif(BOOST_PROPERTY_TREE_IN_BOOST_TREE)
     get_filename_component(BOOST_ROOT ../.. ABSOLUTE)
     set(BOOST_INCLUDEDIR ${BOOST_ROOT})
     set(BOOST_LIBRARYDIR ${BOOST_ROOT}/stage/lib)
-    find_package(Boost COMPONENTS serialization unit_test_framework REQUIRED)
-    link_libraries(Boost::serialization)
-
+    find_package(Boost COMPONENTS serialization REQUIRED)
 
     target_include_directories(boost_property_tree INTERFACE ${BOOST_ROOT})
     target_link_directories(boost_property_tree INTERFACE ${BOOST_ROOT}/stage/lib)
