@@ -10,7 +10,6 @@
 
 cmake_minimum_required(VERSION 3.5...3.19)
 
-set(BOOST_PROPERTY_TREE_VERSION 100)
 if(BOOST_SUPERPROJECT_VERSION)
     set(BOOST_PROPERTY_TREE_VERSION ${BOOST_SUPERPROJECT_VERSION})
 endif()
@@ -37,15 +36,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "" FILES ${BOOST_PROPER
 add_library(boost_property_tree INTERFACE)
 add_library(Boost::property_tree ALIAS boost_property_tree)
 
-#target_compile_features(boost_property_tree PUBLIC cxx_constexpr)
-
-if(BOOST_SUPERPROJECT_VERSION)
-    target_include_directories(boost_property_tree INTERFACE include)
-else()
-    target_include_directories(boost_property_tree
-        INTERFACE
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
-endif()
+target_include_directories(boost_property_tree INTERFACE include)
 
 if(BOOST_SUPERPROJECT_VERSION)
     #
