@@ -47,7 +47,7 @@ namespace boost { namespace property_tree { namespace xml_parser
                       typename Ptree::key_type::value_type
                   > &stream,
                   Ptree &pt,
-                  int flags = 0)
+			int flags = trim_whitespace)//mjb
     {
         read_xml_internal(stream, pt, flags, std::string());
     }
@@ -72,7 +72,7 @@ namespace boost { namespace property_tree { namespace xml_parser
     template<class Ptree>
     void read_xml(const std::string &filename,
                   Ptree &pt,
-                  int flags = 0,
+			int flags = trim_whitespace,  //mjb
                   const std::locale &loc = std::locale())
     {
         BOOST_ASSERT(validate_flags(flags));

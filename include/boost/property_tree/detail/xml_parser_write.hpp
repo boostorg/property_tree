@@ -43,7 +43,7 @@ namespace boost { namespace property_tree { namespace xml_parser
         stream << s;
         stream << Ch('-') << Ch('-') << Ch('>');
         if (separate_line)
-            stream << Ch('\n');
+            stream << Ch('\n');  //mjb
     }
 
     template<class Str>
@@ -59,7 +59,7 @@ namespace boost { namespace property_tree { namespace xml_parser
             write_xml_indent(stream,indent,settings);
         stream << encode_char_entities(s);
         if (separate_line)
-            stream << Ch('\n');
+            stream << Ch('\n');   //mjb
     }
 
     template<class Ptree>
@@ -73,7 +73,7 @@ namespace boost { namespace property_tree { namespace xml_parser
         typedef typename Ptree::key_type Str;
         typedef typename Ptree::const_iterator It;
 
-        bool want_pretty = settings.indent_count > 0;
+	    bool want_pretty = settings.indent_count > 0;
         // Find if elements present
         bool has_elements = false;
         bool has_attrs_only = pt.data().empty();
@@ -98,7 +98,7 @@ namespace boost { namespace property_tree { namespace xml_parser
                 write_xml_indent(stream,indent,settings);
                 stream << Ch('<') << key << 
                           Ch('/') << Ch('>');
-                if (want_pretty)
+                if (want_pretty)  //mjb
                     stream << Ch('\n');
             }
         }
@@ -134,7 +134,7 @@ namespace boost { namespace property_tree { namespace xml_parser
 
                     // Break line if needed and if we want pretty-printing
                     if (has_elements && want_pretty)
-                        stream << Ch('\n');
+                        stream << Ch('\n');   //mjb
                 }
             }
 
@@ -167,9 +167,9 @@ namespace boost { namespace property_tree { namespace xml_parser
             {
                 if (has_elements)
                     write_xml_indent(stream,indent,settings);
-                stream << Ch('<') << Ch('/') << key << Ch('>');
+	            stream << Ch('<') << Ch('/') << key << Ch('>');
                 if (want_pretty)
-                    stream << Ch('\n');
+                    stream << Ch('\n');  //mjb
             }
 
         }

@@ -38,7 +38,7 @@ namespace boost { namespace property_tree { namespace xml_parser
         typedef typename Str::value_type Ch;
     public:
         xml_writer_settings(Ch inchar = Ch(' '),
-                typename Str::size_type incount = 0,
+                typename Str::size_type incount = 4,  //changed from 0
                 const Str &enc = widen<Str>("utf-8"))
             : indent_char(inchar)
             , indent_count(incount)
