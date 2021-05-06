@@ -17,6 +17,7 @@ project
 
 test-suite "property_tree"
    : [ run test_property_tree.cpp /boost/serialization//boost_serialization ]
+     [ run test_rapidxml.cpp ]
      [ run test_info_parser.cpp ]
      [ run test_json_parser.cpp ]
      [ run test_json_parser2.cpp ]
