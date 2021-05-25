@@ -13,6 +13,7 @@
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/detail/info_parser_error.hpp"
 #include "boost/property_tree/detail/info_parser_utils.hpp"
+#include "boost/core/no_exceptions_support.hpp"
 #include <iterator>
 #include <string>
 #include <stack>
@@ -210,7 +211,7 @@ namespace boost { namespace property_tree { namespace info_parser
         std::stack<Ptree *> stack;
         stack.push(&pt);                // Push root ptree on stack initially
 
-        try {
+        BOOST_TRY {
             // While there are characters in the stream
             while (stream.good()) {
                 // Read one line from stream
@@ -372,8 +373,9 @@ namespace boost { namespace property_tree { namespace info_parser
                 BOOST_PROPERTY_TREE_THROW(info_parser_error("unmatched {", "", 0));
 
         }
-        catch (info_parser_error &e)
+        BOOST_CATCH (info_parser_error &e)
         {
+    #ifndef BOOST_NO_EXCEPTIONS
             // If line undefined rethrow error with correct filename and line
             if (e.line() == 0)
             {
@@ -381,8 +383,9 @@ namespace boost { namespace property_tree { namespace info_parser
             }
             else
                 BOOST_PROPERTY_TREE_THROW(e);
-
+    #endif
         }
+        BOOST_CATCH_END
 
     }
 

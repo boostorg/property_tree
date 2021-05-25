@@ -14,6 +14,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/detail/ptree_utils.hpp>
 #include <boost/property_tree/detail/file_parser_error.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -165,13 +166,17 @@ namespace boost { namespace property_tree { namespace ini_parser
             BOOST_PROPERTY_TREE_THROW(ini_parser_error(
                 "cannot open file", filename, 0));
         stream.imbue(loc);
-        try {
+
+        BOOST_TRY {
             read_ini(stream, pt);
         }
-        catch (ini_parser_error &e) {
+        BOOST_CATCH (ini_parser_error &e) {
+    #ifndef BOOST_NO_EXCEPTIONS
             BOOST_PROPERTY_TREE_THROW(ini_parser_error(
                 e.message(), filename, e.line()));
+    #endif
         }
+        BOOST_CATCH_END
     }
 
     namespace detail
@@ -313,13 +318,17 @@ namespace boost { namespace property_tree { namespace ini_parser
             BOOST_PROPERTY_TREE_THROW(ini_parser_error(
                 "cannot open file", filename, 0));
         stream.imbue(loc);
-        try {
+
+        BOOST_TRY {
             write_ini(stream, pt, flags);
         }
-        catch (ini_parser_error &e) {
+        BOOST_CATCH (ini_parser_error &e) {
+    #ifndef BOOST_NO_EXCEPTIONS
             BOOST_PROPERTY_TREE_THROW(ini_parser_error(
                 e.message(), filename, e.line()));
+    #endif
         }
+        BOOST_CATCH_END
     }
 
 } } }

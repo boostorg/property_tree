@@ -15,6 +15,7 @@
 #include <boost/property_tree/detail/info_parser_writer_settings.hpp>
 #include <boost/property_tree/detail/info_parser_read.hpp>
 #include <boost/property_tree/detail/info_parser_write.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 #include <istream>
 
 namespace boost { namespace property_tree { namespace info_parser
@@ -43,11 +44,12 @@ namespace boost { namespace property_tree { namespace info_parser
     void read_info(std::basic_istream<Ch> &stream, Ptree &pt,
                    const Ptree &default_ptree)
     {
-        try {
+        BOOST_TRY {
             read_info(stream, pt);
-        } catch(file_parser_error &) {
+        } BOOST_CATCH(file_parser_error &) {
             pt = default_ptree;
         }
+        BOOST_CATCH_END
     }
 
     /**
@@ -87,11 +89,12 @@ namespace boost { namespace property_tree { namespace info_parser
                    const Ptree &default_ptree,
                    const std::locale &loc = std::locale())
     {
-        try {
+        BOOST_TRY {
             read_info(filename, pt, loc);
-        } catch(file_parser_error &) {
+        } BOOST_CATCH(file_parser_error &) {
             pt = default_ptree;
         }
+        BOOST_CATCH_END
     }
 
     /**
