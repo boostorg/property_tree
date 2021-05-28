@@ -14,10 +14,11 @@ list(FILTER BOOST_PROPERTY_TREE_TESTS_FILES EXCLUDE REGEX "^${CMAKE_CURRENT_SOUR
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "" FILES ${BOOST_PROPERTY_TREE_TESTS_FILES})
 
 macro(PTREE_TEST name)
-    add_executable("${name}" ${ARGN})
-    target_include_directories("${name}" PRIVATE .)
-    target_link_libraries("${name}" PRIVATE Boost::property_tree Boost::serialization)
-    add_test(NAME "property_tree-${name}" COMMAND "${name}")
+    message(STATUS "ptree_test ${PROJECT_NAME}-${name} SRCS ${ARGN}")
+    add_executable("${PROJECT_NAME}-${name}" ${ARGN})
+    target_include_directories("${PROJECT_NAME}-${name}" PRIVATE .)
+    target_link_libraries("${PROJECT_NAME}-${name}" PRIVATE Boost::property_tree Boost::serialization)
+    add_test(NAME "${PROJECT_NAME}-${name}" COMMAND "${PROJECT_NAME}-${name}")
 endmacro()
 
 PTREE_TEST(test-multi test_multi_module1.cpp test_multi_module2.cpp)
