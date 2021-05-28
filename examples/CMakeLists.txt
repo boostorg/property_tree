@@ -16,42 +16,25 @@ source_group("test" FILES
     speed_test.cpp
 )
 
+macro(add_example)
+    cmake_parse_arguments("addex" "" "NAME" "SRCS;DEPS" ${ARGN})
+    if("${addex_NAME}" STREQUAL "")
+        message(FATAL_ERROR "add_example: no NAME")
+    endif()
+    if("${addex_SRCS}" STREQUAL "")
+        message(FATAL_ERROR "add_example: no SRCS")
+    endif()
+    message(STATUS "add_example: ${addex_NAME} SRCS: ${addex_SRCS} DEPS: ${addex_DEPS}")
+    add_executable("${PROJECT_NAME}-example-${addex_NAME}"
+        ${addex_SRCS})
+    set_property(TARGET "${PROJECT_NAME}-example-${addex_NAME}" PROPERTY FOLDER "example")
+    target_link_libraries("${PROJECT_NAME}-example-${addex_NAME}" PRIVATE ${addex_DEPS})
+endmacro()
 #
 
-add_executable(custom_data_type
-    custom_data_type.cpp
-)
-set_property(TARGET custom_data_type PROPERTY FOLDER "example")
-target_link_libraries(custom_data_type PRIVATE Boost::property_tree)
-
-#
-
-add_executable(debug_settings
-    debug_settings.cpp
-)
-set_property(TARGET debug_settings PROPERTY FOLDER "example")
-target_link_libraries(debug_settings PRIVATE Boost::property_tree)
-
-#
-
-add_executable(empty_ptree_trick
-    empty_ptree_trick.cpp
-)
-set_property(TARGET empty_ptree_trick PROPERTY FOLDER "example")
-target_link_libraries(empty_ptree_trick PRIVATE Boost::property_tree)
-
-#
-
-add_executable(info_grammar_spirit
-    info_grammar_spirit.cpp
-)
-set_property(TARGET info_grammar_spirit PROPERTY FOLDER "example")
-target_link_libraries(info_grammar_spirit PRIVATE Boost::property_tree)
-
-#
-
-add_executable(speed_test
-    speed_test.cpp
-)
-set_property(TARGET speed_test PROPERTY FOLDER "example")
-target_link_libraries(speed_test PRIVATE Boost::property_tree)
+add_example(NAME custom_data_type SRCS custom_data_type.cpp DEPS Boost::property_tree)
+add_example(NAME debug_settings SRCS debug_settings.cpp DEPS Boost::property_tree)
+configure_file(debug_settings.xml debug_settings.xml COPYONLY)
+add_example(NAME empty_ptree_trick SRCS empty_ptree_trick.cpp DEPS Boost::property_tree)
+add_example(NAME info_grammar_spirit SRCS info_grammar_spirit.cpp DEPS Boost::property_tree)
+add_example(NAME speed_test SRCS speed_test.cpp DEPS Boost::property_tree)
