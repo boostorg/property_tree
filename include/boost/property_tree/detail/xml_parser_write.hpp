@@ -72,6 +72,7 @@ namespace boost { namespace property_tree { namespace xml_parser
         typedef typename Ptree::key_type::value_type Ch;
         typedef typename Ptree::key_type Str;
         typedef typename Ptree::const_iterator It;
+        const char* nullkey = R"nullkey(nullkey-3cb6534e-d358-4705-9e74-fee06453661e)nullkey";
 
         bool want_pretty = settings.indent_count > 0;
         // Find if elements present
@@ -96,7 +97,7 @@ namespace boost { namespace property_tree { namespace xml_parser
             if (indent >= 0)
             {
                 write_xml_indent(stream,indent,settings);
-                stream << Ch('<') << key << 
+                stream << Ch('<') << (key.empty() ? nullkey : key) << 
                           Ch('/') << Ch('>');
                 if (want_pretty)
                     stream << Ch('\n');
@@ -109,7 +110,7 @@ namespace boost { namespace property_tree { namespace xml_parser
             {
                 // Write opening brace and key
                 write_xml_indent(stream,indent,settings);
-                stream << Ch('<') << key;
+                stream << Ch('<') << (key.empty() ? nullkey : key);
 
                 // Write attributes
                 if (optional<const Ptree &> attribs = pt.get_child_optional(xmlattr<Str>()))
@@ -167,7 +168,7 @@ namespace boost { namespace property_tree { namespace xml_parser
             {
                 if (has_elements)
                     write_xml_indent(stream,indent,settings);
-                stream << Ch('<') << Ch('/') << key << Ch('>');
+                stream << Ch('<') << Ch('/') << (key.empty() ? nullkey : key) << Ch('>');
                 if (want_pretty)
                     stream << Ch('\n');
             }
