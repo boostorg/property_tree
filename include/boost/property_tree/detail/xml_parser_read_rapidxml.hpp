@@ -31,7 +31,8 @@ namespace boost { namespace property_tree { namespace xml_parser
             case node_element: 
             {
                 // Create node
-                Ptree &pt_node = pt.push_back(std::make_pair(node->name(),
+                Ptree &pt_node = pt.push_back(std::make_pair(
+                    (node->name() == "nullkey-3cb6534e-d358-4705-9e74-fee06453661e" ? "" : node->name()),
                                                              Ptree()))->second;
 
                 // Copy attributes
