@@ -110,7 +110,7 @@ void test_xml_parser()
     generic_parser_test_ok<Ptree, ReadFuncWS, WriteFuncWS>
     (
         ReadFuncWS(), WriteFuncWS(), ok_data_6, NULL,
-        "testok6a.xml", NULL, "testok6aout.xml", 15, 23, 89
+        "testok6a.xml", NULL, "testok6aout.xml", 4, 1, 2
     );
 
     generic_parser_test_error<Ptree, ReadFuncWS, WriteFuncWS, xml_parser_error>
