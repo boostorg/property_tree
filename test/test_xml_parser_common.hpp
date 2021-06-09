@@ -107,6 +107,12 @@ void test_xml_parser()
         3, umlautsize<char_type>(), 12
     );
 
+    generic_parser_test_ok<Ptree, ReadFuncWS, WriteFuncWS>
+    (
+        ReadFuncWS(), WriteFuncWS(), ok_data_6, NULL,
+        "testok6a.xml", NULL, "testok6aout.xml", 15, 23, 89
+    );
+
     generic_parser_test_error<Ptree, ReadFuncWS, WriteFuncWS, xml_parser_error>
     (
         ReadFuncWS(), WriteFuncWS(), error_data_1, NULL,
