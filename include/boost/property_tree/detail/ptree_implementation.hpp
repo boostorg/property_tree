@@ -59,10 +59,12 @@ namespace boost { namespace property_tree
 
         // Access functions for getting to the children of a tree.
         static base_container& ch(self_type *s) {
-            return *static_cast<base_container*>(s->m_children);
+//            if(s->m_children.empty()) s->m_children = typename subs::base_container();
+            return boost::any_cast<base_container&>(s->m_children);
         }
         static const base_container& ch(const self_type *s) {
-            return *static_cast<const base_container*>(s->m_children);
+//            if(s->m_children.empty()) const_cast<self_type*>(s)->m_children = typename subs::base_container();
+            return boost::any_cast<const base_container&>(s->m_children);
         }
         static by_name_index& assoc(self_type *s) {
             return ch(s).BOOST_NESTED_TEMPLATE get<by_name>();
@@ -170,49 +172,27 @@ namespace boost { namespace property_tree
     };
 
 
-    // Big five
-
+    // Constructors
+    // implicitly generated copy and move constructors and assignment operators
     // Perhaps the children collection could be created on-demand only, to
     // reduce heap traffic. But that's a lot more work to implement.
 
     template<class K, class D, class C> inline
     basic_ptree<K, D, C>::basic_ptree()
-        : m_children(new typename subs::base_container)
+        : m_children(typename subs::base_container())
     {
     }
 
     template<class K, class D, class C> inline
     basic_ptree<K, D, C>::basic_ptree(const data_type &d)
-        : m_data(d), m_children(new typename subs::base_container)
+        : m_data(d), m_children(typename subs::base_container())
     {
-    }
-
-    template<class K, class D, class C> inline
-    basic_ptree<K, D, C>::basic_ptree(const basic_ptree<K, D, C> &rhs)
-        : m_data(rhs.m_data),
-          m_children(new typename subs::base_container(subs::ch(&rhs)))
-    {
-    }
-
-    template<class K, class D, class C>
-    basic_ptree<K, D, C> &
-        basic_ptree<K, D, C>::operator =(const basic_ptree<K, D, C> &rhs)
-    {
-        self_type(rhs).swap(*this);
-        return *this;
-    }
-
-    template<class K, class D, class C>
-    basic_ptree<K, D, C>::~basic_ptree()
-    {
-        delete &subs::ch(this);
     }
 
     template<class K, class D, class C> inline
     void basic_ptree<K, D, C>::swap(basic_ptree<K, D, C> &rhs)
     {
         boost::swap(m_data, rhs.m_data);
-        // Void pointers, no ADL necessary
         std::swap(m_children, rhs.m_children);
     }
 
@@ -222,6 +202,7 @@ namespace boost { namespace property_tree
     typename basic_ptree<K, D, C>::size_type
         basic_ptree<K, D, C>::size() const
     {
+//        if (m_children.empty()) return 0;
         return subs::ch(this).size();
     }
 
@@ -235,6 +216,7 @@ namespace boost { namespace property_tree
     template<class K, class D, class C> inline
     bool basic_ptree<K, D, C>::empty() const
     {
+//        if (m_children.empty()) return true;
         return subs::ch(this).empty();
     }
 
@@ -563,7 +545,11 @@ namespace boost { namespace property_tree
     void basic_ptree<K, D, C>::clear()
     {
         m_data = data_type();
-        subs::ch(this).clear();
+        if (this->m_children.empty()){
+            m_children=typename subs::base_container();
+        } else {
+            subs::ch(this).clear();
+        }
     }
 
     template<class K, class D, class C>
@@ -888,6 +874,7 @@ namespace boost { namespace property_tree
             // I'm the child we're looking for.
             return const_cast<basic_ptree*>(this);
         }
+//        if (m_children.empty()) return 0;
         // Recurse down the tree to find the path.
         key_type fragment = p.reduce();
         const_assoc_iterator el = find(fragment);

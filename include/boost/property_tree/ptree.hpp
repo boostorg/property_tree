@@ -26,6 +26,7 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/optional.hpp>
+#include <boost/any.hpp>
 #include <utility>                  // for std::pair
 
 namespace boost { namespace property_tree
@@ -82,16 +83,13 @@ namespace boost { namespace property_tree
         typedef typename path_of<Key>::type          path_type;
 
 
-        // The big five
+        // Constructors
+        // copy and move constructors and assignment operators are implicitly created
 
         /** Creates a node with no children and default-constructed data. */
         basic_ptree();
         /** Creates a node with no children and a copy of the given data. */
         explicit basic_ptree(const data_type &data);
-        basic_ptree(const self_type &rhs);
-        ~basic_ptree();
-        /** Basic guarantee only. */
-        self_type &operator =(const self_type &rhs);
 
         /** Swap with other tree. Only constant-time and nothrow if the
          * data type's swap is.
@@ -491,7 +489,7 @@ namespace boost { namespace property_tree
         data_type m_data;
         // Hold the children - this is a void* because we can't complete the
         // container type within the class.
-        void* m_children;
+        boost::any m_children;
 
         // Getter tree-walk. Not const-safe! Gets the node the path refers to,
         // or null. Destroys p's value.
