@@ -72,7 +72,7 @@ namespace boost { namespace property_tree { namespace xml_parser
         typedef typename Ptree::key_type::value_type Ch;
         typedef typename Ptree::key_type Str;
         typedef typename Ptree::const_iterator It;
-        const char* nullkey = "nullkey-3cb6534e-d358-4705-9e74-fee06453661e";
+        const typename Ptree::key_type &nullkey = "nullkey-3cb6534e-d358-4705-9e74-fee06453661e";
 
         bool want_pretty = settings.indent_count > 0;
         // Find if elements present
