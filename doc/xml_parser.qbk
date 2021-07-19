@@ -35,9 +35,10 @@ XML / property tree conversion schema (__read_xml__ and __write_xml__):
 
 * Each XML element corresponds to a property tree node. The child elements
   correspond to the children of the node.
-* The attributes of an XML element are stored in the subkey [^<xmlattr>]. There
-  is one child node per attribute in the attribute node. Existence of the
-  [^<xmlattr>] node is not guaranteed or necessary when there are no attributes.
+* The attributes of an XML element are stored in the subkey [^<xmlattr>] 
+  (name including the "<" and ">"!). There is one child node per attribute in 
+  the attribute node. Existence of the [^<xmlattr>] node is not guaranteed or 
+  necessary when there are no attributes.
 * XML comments are stored in nodes named [^<xmlcomment>], unless comment
   ignoring is enabled via the flags.
 * Text content is stored in one of two ways, depending on the flags. The default
