@@ -13,6 +13,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/detail/xml_parser_utils.hpp>
+#include <boost/lexical_cast.hpp>
 #include <string>
 #include <ostream>
 #include <iomanip>
@@ -97,7 +98,8 @@ namespace boost { namespace property_tree { namespace xml_parser
             if (indent >= 0)
             {
                 write_xml_indent(stream,indent,settings);
-                stream << Ch('<') << (key.empty() ? nullkey : key) << 
+                stream << Ch('<') << (key.empty() ?
+                        lexical_cast<typename Ptree::key_type>(nullkey) : key) <<
                           Ch('/') << Ch('>');
                 if (want_pretty)
                     stream << Ch('\n');
@@ -110,7 +112,8 @@ namespace boost { namespace property_tree { namespace xml_parser
             {
                 // Write opening brace and key
                 write_xml_indent(stream,indent,settings);
-                stream << Ch('<') << (key.empty() ? nullkey : key);
+                stream << Ch('<') << (key.empty() ?
+                        lexical_cast<typename Ptree::key_type>(nullkey) : key);
 
                 // Write attributes
                 if (optional<const Ptree &> attribs = pt.get_child_optional(xmlattr<Str>()))
@@ -168,7 +171,8 @@ namespace boost { namespace property_tree { namespace xml_parser
             {
                 if (has_elements)
                     write_xml_indent(stream,indent,settings);
-                stream << Ch('<') << Ch('/') << (key.empty() ? nullkey : key) << Ch('>');
+                stream << Ch('<') << Ch('/') << (key.empty() ?
+                        lexical_cast<typename Ptree::key_type>(nullkey) : key) << Ch('>');
                 if (want_pretty)
                     stream << Ch('\n');
             }
