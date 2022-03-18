@@ -61,8 +61,8 @@ namespace boost { namespace property_tree
         typename internal_type;
         typename external_type;
 
-        boost::optional<external_type> Tr::get_value(internal_type);
-        boost::optional<internal_type> Tr::put_value(external_type);
+        optional<external_type> Tr::get_value(internal_type);
+        optional<internal_type> Tr::put_value(external_type);
     }
 #endif
     /// If you want to use a custom key type, specialize this struct for it
