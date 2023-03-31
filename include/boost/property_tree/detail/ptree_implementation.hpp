@@ -669,7 +669,12 @@ namespace boost { namespace property_tree
         }
         BOOST_PROPERTY_TREE_THROW(ptree_bad_data(
             std::string("conversion of data to type \"") +
-            typeid(Type).name() + "\" failed", data()));
+#ifdef BOOST_NO_TYPEID
+            boost::typeindex::type_id<Type>().pretty_name()
+#else
+            typeid(Type).name()
+#endif
+            + "\" failed", data()));
     }
 
     template<class K, class D, class C>
@@ -824,8 +829,13 @@ namespace boost { namespace property_tree
             data() = *o;
         } else {
             BOOST_PROPERTY_TREE_THROW(ptree_bad_data(
-                std::string("conversion of type \"") + typeid(Type).name() +
-                "\" to data failed", boost::any()));
+                std::string("conversion of type \"") +
+#ifdef BOOST_NO_TYPEID
+                boost::typeindex::type_id<Type>().pretty_name()
+#else
+                typeid(Type).name()
+#endif
+                + "\" to data failed", boost::any()));
         }
     }
 
