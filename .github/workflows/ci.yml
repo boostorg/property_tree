@@ -223,6 +223,7 @@ jobs:
             cxxstd: "11,14,17,2a"
             addrmd: 64
             os: windows-2019
+            cxxflags: "cxxflags=-Wa,-mbig-obj"
 
     runs-on: ${{matrix.os}}
 
@@ -255,7 +256,7 @@ jobs:
         shell: cmd
         run: |
           cd ../boost-root
-          b2 -j1 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release embed-manifest-via=linker
+          b2 -j1 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} ${{matrix.cxxflags}} variant=debug,release embed-manifest-via=linker
 
   posix-cmake-subdir:
     strategy:
