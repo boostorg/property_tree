@@ -30,7 +30,6 @@ if(BOOST_SUPERPROJECT_VERSION)
         Boost::bind
         Boost::config
         Boost::core
-        Boost::format
         Boost::iterator
         Boost::mpl
         Boost::multi_index
