@@ -15,6 +15,7 @@
 #include <boost/iterator/reverse_iterator.hpp>
 #include <boost/assert.hpp>
 #include <boost/core/invoke_swap.hpp>
+#include <boost/core/type_name.hpp>
 #include <memory>
 
 #if (defined(BOOST_MSVC) && \
@@ -669,7 +670,7 @@ namespace boost { namespace property_tree
         }
         BOOST_PROPERTY_TREE_THROW(ptree_bad_data(
             std::string("conversion of data to type \"") +
-            typeid(Type).name() + "\" failed", data()));
+            boost::core::type_name<Type>() + "\" failed", data()));
     }
 
     template<class K, class D, class C>
@@ -824,7 +825,7 @@ namespace boost { namespace property_tree
             data() = *o;
         } else {
             BOOST_PROPERTY_TREE_THROW(ptree_bad_data(
-                std::string("conversion of type \"") + typeid(Type).name() +
+                std::string("conversion of type \"") + boost::core::type_name<Type>() +
                 "\" to data failed", boost::any()));
         }
     }
