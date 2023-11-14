@@ -16,6 +16,7 @@
 #include <iostream>
 #include <ctime>
 #include <algorithm>
+#include <random>
 
 using namespace std;
 using namespace boost;
@@ -32,8 +33,8 @@ void prepare_keys(int size)
     for (int i = 0; i < size; ++i)
         keys.push_back((format("%d") % i).str());
     shuffled_keys = keys;
-    srand(0);
-    random_shuffle(shuffled_keys.begin(), shuffled_keys.end());
+    // Seed the engine with default seed every time
+    std::shuffle(shuffled_keys.begin(), shuffled_keys.end(), std::mt19937());
 }
 
 void clock_push_back(int size)
