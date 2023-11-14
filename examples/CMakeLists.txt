@@ -16,21 +16,27 @@ source_group("test" FILES
     speed_test.cpp
 )
 
-macro(add_example)
+if(NOT TARGET tests)
+    add_custom_target(tests)
+endif()
+
+function(add_example)
     cmake_parse_arguments("addex" "" "NAME" "SRCS;DEPS" ${ARGN})
     if("${addex_NAME}" STREQUAL "")
-        message(FATAL_ERROR "add_example: no NAME")
+        message(SEND_ERROR "add_example: no NAME")
+        return()
     endif()
     if("${addex_SRCS}" STREQUAL "")
-        message(FATAL_ERROR "add_example: no SRCS")
+        message(SEND_ERROR "add_example: no SRCS")
+        return()
     endif()
     message(STATUS "add_example: ${addex_NAME} SRCS: ${addex_SRCS} DEPS: ${addex_DEPS}")
     add_executable("${PROJECT_NAME}-example-${addex_NAME}"
         ${addex_SRCS})
     set_property(TARGET "${PROJECT_NAME}-example-${addex_NAME}" PROPERTY FOLDER "example")
     target_link_libraries("${PROJECT_NAME}-example-${addex_NAME}" PRIVATE ${addex_DEPS})
-endmacro()
-#
+    add_dependencies(tests "${PROJECT_NAME}-example-${addex_NAME}")
+endfunction()
 
 add_example(NAME custom_data_type SRCS custom_data_type.cpp DEPS Boost::property_tree)
 add_example(NAME debug_settings SRCS debug_settings.cpp DEPS Boost::property_tree)
