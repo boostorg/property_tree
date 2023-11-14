@@ -43,6 +43,7 @@ if(BOOST_SUPERPROJECT_VERSION)
 
     if(BUILD_TESTING)
         add_subdirectory(test)
+        add_subdirectory(examples)
     endif()
 
     return()
