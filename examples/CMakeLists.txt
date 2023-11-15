@@ -16,10 +16,6 @@ source_group("test" FILES
     speed_test.cpp
 )
 
-if(NOT TARGET tests)
-    add_custom_target(tests)
-endif()
-
 function(add_example)
     cmake_parse_arguments("addex" "" "NAME" "SRCS;DEPS" ${ARGN})
     if("${addex_NAME}" STREQUAL "")
@@ -35,7 +31,6 @@ function(add_example)
         ${addex_SRCS})
     set_property(TARGET "${PROJECT_NAME}-example-${addex_NAME}" PROPERTY FOLDER "example")
     target_link_libraries("${PROJECT_NAME}-example-${addex_NAME}" PRIVATE ${addex_DEPS})
-    add_dependencies(tests "${PROJECT_NAME}-example-${addex_NAME}")
 endfunction()
 
 add_example(NAME custom_data_type SRCS custom_data_type.cpp DEPS Boost::property_tree)
