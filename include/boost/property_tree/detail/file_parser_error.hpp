@@ -12,6 +12,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <string>
+#include <sstream>
 
 namespace boost { namespace property_tree
 {
