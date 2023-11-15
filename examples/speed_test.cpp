@@ -31,7 +31,7 @@ void prepare_keys(int size)
     // Prepare keys
     keys.clear();
     for (int i = 0; i < size; ++i)
-        keys.push_back((format("%d") % i).str());
+        keys.push_back((boost::format("%d") % i).str());
     shuffled_keys = keys;
     // Seed the engine with default seed every time
     std::shuffle(shuffled_keys.begin(), shuffled_keys.end(), std::mt19937());
