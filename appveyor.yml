@@ -43,7 +43,7 @@ install:
   - cd boost-root
   - git submodule update --init tools/boostdep
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\property_tree\
-  - python tools/boostdep/depinst/depinst.py property_tree
+  - python tools/boostdep/depinst/depinst.py -I examples property_tree
   - cmd /c bootstrap
   - b2 -d0 headers
 
