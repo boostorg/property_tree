@@ -820,14 +820,27 @@ void test_get_child_put_child(PTREE *)
     BOOST_TEST(cpt2.get_child(T("k2.k")) == pt);
 
     // Do correct extractions via get_child (default value version)
-    BOOST_TEST(pt1.get_child(T("k1"), PTREE(T("def"))) != PTREE(T("def")));
-    BOOST_TEST(pt1.get_child(T("k2.k"), PTREE(T("def"))) != PTREE(T("def")));
-    BOOST_TEST(pt2.get_child(T("k1"), PTREE(T("def"))) == pt);
-    BOOST_TEST(pt2.get_child(T("k2.k"), PTREE(T("def"))) == pt);
-    BOOST_TEST(cpt1.get_child(T("k1"), PTREE(T("def"))) != PTREE(T("def")));
-    BOOST_TEST(cpt1.get_child(T("k2.k"), PTREE(T("def"))) != PTREE(T("def")));
-    BOOST_TEST(cpt2.get_child(T("k1"), PTREE(T("def"))) == pt);
-    BOOST_TEST(cpt2.get_child(T("k2.k"), PTREE(T("def"))) == pt);
+    PTREE dflt(T("def"));
+    BOOST_TEST(pt1.get_child(T("k1"), dflt) != dflt);
+    BOOST_TEST(pt1.get_child(T("k2.k"), dflt) != dflt);
+    BOOST_TEST(pt2.get_child(T("k1"), dflt) == pt);
+    BOOST_TEST(pt2.get_child(T("k2.k"), dflt) == pt);
+    BOOST_TEST(cpt1.get_child(T("k1"), dflt) != dflt);
+    BOOST_TEST(cpt1.get_child(T("k2.k"), dflt) != dflt);
+    BOOST_TEST(cpt2.get_child(T("k1"), dflt) == pt);
+    BOOST_TEST(cpt2.get_child(T("k2.k"), dflt) == pt);
+
+    // Ensure that get_child does not compile when using temporaries as the default value.
+    BOOST_TEST((!boost::mp11::mp_valid<get_child_accepts_default_of_type, const PTREE&, CHTYPE, PTREE>::value));
+    BOOST_TEST((!boost::mp11::mp_valid<get_child_accepts_default_of_type, const PTREE&, CHTYPE, const PTREE>::value));
+    BOOST_TEST((!boost::mp11::mp_valid<get_child_accepts_default_of_type, PTREE&, CHTYPE, PTREE>::value));
+    BOOST_TEST((!boost::mp11::mp_valid<get_child_accepts_default_of_type, PTREE&, CHTYPE, const PTREE>::value));
+
+    // Test get_child_accepts_default_of_type itself
+    BOOST_TEST((boost::mp11::mp_valid<get_child_accepts_default_of_type, const PTREE&, CHTYPE, PTREE&>::value));
+    BOOST_TEST((boost::mp11::mp_valid<get_child_accepts_default_of_type, const PTREE&, CHTYPE, const PTREE&>::value));
+    BOOST_TEST((boost::mp11::mp_valid<get_child_accepts_default_of_type, PTREE&, CHTYPE, PTREE&>::value));
+    BOOST_TEST((boost::mp11::mp_valid<get_child_accepts_default_of_type, PTREE&, CHTYPE, const PTREE&>::value));
 
     // Do correct extractions via get_child (optional version)
     boost::optional<PTREE &> opt;
