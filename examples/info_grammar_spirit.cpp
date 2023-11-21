@@ -28,7 +28,7 @@ struct info_grammar: public spirit::classic::grammar<info_grammar>
         spirit::classic::rule<typename spirit::classic::lexeme_scanner<Scanner>::type> chr, qchr, escape_seq;
         spirit::classic::rule<Scanner> string, qstring, cstring, key, value, entry, info;
 
-        definition(const info_grammar &self)
+        definition(const info_grammar & /*self*/)
         {
 
             using namespace spirit::classic;
