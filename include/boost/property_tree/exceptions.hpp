@@ -31,7 +31,7 @@ namespace boost { namespace property_tree
         /// @param what The message to associate with this error.
         ptree_error(const std::string &what);
 
-        BOOST_DEFAULTED_FUNCTION(~ptree_error() throw() BOOST_OVERRIDE, {});
+        ~ptree_error() throw() override = default;
     };
 
 
@@ -48,7 +48,7 @@ namespace boost { namespace property_tree
         template<class T> ptree_bad_data(const std::string &what,
                                          const T &data);
 
-        BOOST_DEFAULTED_FUNCTION(~ptree_bad_data() throw() BOOST_OVERRIDE, {});
+        ~ptree_bad_data() throw() override = default;
 
         /// Retrieve the data associated with this error. This is the source
         /// value that failed to be translated. You need to explicitly
@@ -70,7 +70,7 @@ namespace boost { namespace property_tree
         template<class T> ptree_bad_path(const std::string &what,
                                          const T &path);
 
-        BOOST_DEFAULTED_FUNCTION(~ptree_bad_path() throw() BOOST_OVERRIDE, {});
+        ~ptree_bad_path() throw() override = default;
 
         /// Retrieve the invalid path. You need to explicitly specify the
         /// type of path.

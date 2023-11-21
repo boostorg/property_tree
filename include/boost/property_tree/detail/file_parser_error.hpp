@@ -34,11 +34,7 @@ namespace boost { namespace property_tree
         {
         }
 
-        BOOST_DEFAULTED_FUNCTION(~file_parser_error() throw() BOOST_OVERRIDE,
-            // gcc 3.4.2 complains about lack of throw specifier on compiler
-            // generated dtor
-        {
-        })
+        ~file_parser_error() throw() override = default;
 
         ///////////////////////////////////////////////////////////////////////
         // Data access
