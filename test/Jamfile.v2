@@ -21,7 +21,7 @@ project
       <toolset>gcc:<warnings-as-errors>on
     ;
 
-run test_property_tree.cpp /boost/serialization//boost_serialization ;
+run test_property_tree.cpp /boost/serialization//boost_serialization/<warnings>off ;
 run test_rapidxml.cpp ;
 run test_info_parser.cpp ;
 run test_json_parser.cpp ;
