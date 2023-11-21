@@ -57,6 +57,13 @@ void test_debug(PTREE *)
 #endif
 }
 
+#if defined(__clang__) && defined(__has_warning)
+# if __has_warning( "-Wself-assign-overloaded" )
+#  pragma clang diagnostic push
+#  pragma clang diagnostic ignored "-Wself-assign-overloaded"
+# endif
+#endif
+
 void test_constructor_destructor_assignment(PTREE *)
 {
 
@@ -105,6 +112,12 @@ void test_constructor_destructor_assignment(PTREE *)
     //BOOST_TEST(PTREE::debug_get_instances_count() == 0);
 
 }
+
+#if defined(__clang__) && defined(__has_warning)
+# if __has_warning( "-Wself-assign-overloaded" )
+#  pragma clang diagnostic pop
+# endif
+#endif
 
 void test_insertion(PTREE *)
 {
