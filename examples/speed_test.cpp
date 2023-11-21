@@ -44,7 +44,7 @@ void clock_push_back(int size)
     shared_array<ptree> pt_array(new ptree[max_repeats]);
 
     int n = 0;
-    clock_t t1 = clock(), t2;
+    clock_t t1 = clock(), t2 = t1;
     do
     {
         if (n >= max_repeats)
@@ -94,7 +94,7 @@ void clock_erase(int size)
             pt_array[n].push_back(ptree::value_type(keys[i], ptree("data")));
 
     int n = 0;
-    clock_t t1 = clock(), t2;
+    clock_t t1 = clock(), t2 = t1;
     do
     {
         if (n >= max_repeats)
