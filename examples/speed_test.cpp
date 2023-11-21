@@ -10,6 +10,14 @@
 
 #define _HAS_ITERATOR_DEBUGGING 0
 
+// -Wdeprecated-copy-with-user-provided-copy in boost/format/group.hpp
+
+#if defined(__clang__) && defined(__has_warning)
+# if __has_warning( "-Wdeprecated-copy-with-user-provided-copy" )
+#  pragma clang diagnostic ignored "-Wdeprecated-copy-with-user-provided-copy"
+# endif
+#endif
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/format.hpp>
 #include <boost/shared_array.hpp>
