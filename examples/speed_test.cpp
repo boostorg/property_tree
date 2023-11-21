@@ -16,6 +16,10 @@
 # if __has_warning( "-Wdeprecated-copy-with-user-provided-copy" )
 #  pragma clang diagnostic ignored "-Wdeprecated-copy-with-user-provided-copy"
 # endif
+// clang 10..12 emits this instead
+# if __has_warning( "-Wdeprecated-copy" )
+#  pragma clang diagnostic ignored "-Wdeprecated-copy"
+# endif
 #endif
 
 #include <boost/property_tree/ptree.hpp>
