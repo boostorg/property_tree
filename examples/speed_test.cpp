@@ -10,6 +10,8 @@
 
 #define _HAS_ITERATOR_DEBUGGING 0
 
+#define _SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING
+
 // -Wdeprecated-copy-with-user-provided-copy in boost/format/group.hpp
 
 #if defined(__clang__) && defined(__has_warning)
