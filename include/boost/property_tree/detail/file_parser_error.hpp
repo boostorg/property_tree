@@ -23,7 +23,7 @@ namespace boost { namespace property_tree
     public:
 
         ///////////////////////////////////////////////////////////////////////
-        // Construction & destruction
+        // Construction
 
         // Construct error
         file_parser_error(const std::string &msg,
@@ -33,8 +33,6 @@ namespace boost { namespace property_tree
             m_message(msg), m_filename(file), m_line(l)
         {
         }
-
-        ~file_parser_error() throw() override = default;
 
         ///////////////////////////////////////////////////////////////////////
         // Data access
