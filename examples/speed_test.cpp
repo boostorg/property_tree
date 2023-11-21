@@ -89,7 +89,6 @@ void clock_erase(int size)
     int max_repeats = 100000 / size;
     shared_array<ptree> pt_array(new ptree[max_repeats]);
 
-    ptree pt;
     for (int n = 0; n < max_repeats; ++n)
         for (int i = 0; i < size; ++i)
             pt_array[n].push_back(ptree::value_type(keys[i], ptree("data")));
