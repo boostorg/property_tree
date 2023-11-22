@@ -14,6 +14,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/detail/xml_parser_utils.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/optional/optional.hpp>
 #include <string>
 #include <ostream>
 #include <iomanip>
