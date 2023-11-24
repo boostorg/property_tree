@@ -130,6 +130,7 @@ namespace boost { namespace property_tree {
                 return new_tree();
             }
             BOOST_ASSERT(false);
+            BOOST_UNREACHABLE_RETURN(root);
         }
         string& new_value() {
             if (stack.empty()) return new_tree().data();
