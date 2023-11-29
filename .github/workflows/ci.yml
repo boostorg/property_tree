@@ -266,7 +266,7 @@ jobs:
         shell: cmd
         run: |
           cd ../boost-root
-          b2 -j1 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} ${{matrix.cxxflags}} variant=debug,release embed-manifest-via=linker
+          b2 -j1 --abbreviate-paths libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} ${{matrix.cxxflags}} variant=debug,release embed-manifest-via=linker
 
   posix-cmake-subdir:
     strategy:

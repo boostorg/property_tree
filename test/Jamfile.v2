@@ -7,6 +7,8 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 # bring in rules for testing
+import path ;
+import regex ;
 import testing ;
 
 project
@@ -31,6 +33,13 @@ run test_ini_parser.cpp ;
 run test_xml_parser_rapidxml.cpp ;
 
 run test_multi_module1.cpp test_multi_module2.cpp ;
+
+# Ensure that all headers are self-contained.
+for local file in [ glob-tree-ex ../include : *.hpp ]
+{
+    local rel_name = [ path.relative-to ../include $(file) ] ;
+    compile self_contained_header.cpp : <define>HEADER_PATH=$(rel_name) : [ regex.replace $(rel_name) "/" "_" ] ;
+}
 
 compile ../examples/custom_data_type.cpp ;
 compile ../examples/debug_settings.cpp ;
