@@ -10,6 +10,7 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_WRITE_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_DETAIL_JSON_PARSER_WRITE_HPP_INCLUDED
 
+#include <boost/property_tree/json_parser/error.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/next_prior.hpp>
 #include <boost/type_traits/make_unsigned.hpp>

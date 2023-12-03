@@ -11,6 +11,10 @@
 #ifndef BOOST_PROPERTY_TREE_DETAIL_EXCEPTIONS_IMPLEMENTATION_HPP_INCLUDED
 #define BOOST_PROPERTY_TREE_DETAIL_EXCEPTIONS_IMPLEMENTATION_HPP_INCLUDED
 
+#include <boost/property_tree/exceptions.hpp>
+
+#include <string>
+
 namespace boost { namespace property_tree
 {
 
