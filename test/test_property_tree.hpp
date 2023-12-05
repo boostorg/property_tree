@@ -1027,13 +1027,27 @@ void test_path(PTREE *)
 
     // Test operator /
     {
+        path p = path(T("key1")) / path(T("key2.key3"));
+        BOOST_TEST(pt.get<int>(p, 0) == 1);
+    }
+    {
+        path p = path(T("key1.key2")) / path(T("key3"));
+        BOOST_TEST(pt.get<int>(p, 0) == 1);
+    }
+    {
         path p = path(T("key1")) / T("key2.key3");
         BOOST_TEST(pt.get<int>(p, 0) == 1);
     }
-
-    // Test operator /
     {
         path p = T("key1.key2") / path(T("key3"));
+        BOOST_TEST(pt.get<int>(p, 0) == 1);
+    }
+    {
+        path p = path(T("key1")) / std::basic_string<CHTYPE>(T("key2.key3"));
+        BOOST_TEST(pt.get<int>(p, 0) == 1);
+    }
+    {
+        path p = std::basic_string<CHTYPE>(T("key1.key2")) / path(T("key3"));
         BOOST_TEST(pt.get<int>(p, 0) == 1);
     }
 
