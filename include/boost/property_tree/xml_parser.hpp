@@ -41,6 +41,8 @@ namespace boost { namespace property_tree { namespace xml_parser
      * @li @c no_comments -- Skip XML comments.
      * @li @c trim_whitespace -- Trim leading and trailing whitespace from text,
      *                           and collapse sequences of whitespace.
+     * @li @c trim_whitespace_without_normalization -- Trim leading and trailing
+     *                           whitespace from text.
      */
     template<class Ptree>
     void read_xml(std::basic_istream<

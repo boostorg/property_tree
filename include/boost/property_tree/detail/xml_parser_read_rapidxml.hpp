@@ -103,6 +103,9 @@ namespace boost { namespace property_tree { namespace xml_parser
 
         try {
             // Parse using appropriate flags
+            const int f_tws_n = parse_trim_whitespace;
+            const int f_tws_n_c = parse_trim_whitespace
+                                | parse_comment_nodes;
             const int f_tws = parse_normalize_whitespace
                             | parse_trim_whitespace;
             const int f_c = parse_comment_nodes;
@@ -114,13 +117,21 @@ namespace boost { namespace property_tree { namespace xml_parser
             if (flags & no_comments) {
                 if (flags & trim_whitespace)
                     doc.BOOST_NESTED_TEMPLATE parse<f_tws>(&v.front());
-                else
-                    doc.BOOST_NESTED_TEMPLATE parse<0>(&v.front());
+                else  {
+                    if (flags & trim_whitespace_without_normalization)
+                        doc.BOOST_NESTED_TEMPLATE parse<f_tws_n>(&v.front());
+                    else
+                        doc.BOOST_NESTED_TEMPLATE parse<0>(&v.front());
+                }
             } else {
                 if (flags & trim_whitespace)
                     doc.BOOST_NESTED_TEMPLATE parse<f_tws_c>(&v.front());
-                else
-                    doc.BOOST_NESTED_TEMPLATE parse<f_c>(&v.front());
+                else {
+                    if (flags & trim_whitespace_without_normalization)
+                        doc.BOOST_NESTED_TEMPLATE parse<f_tws_n_c>(&v.front());
+                    else
+                        doc.BOOST_NESTED_TEMPLATE parse<f_c>(&v.front());
+                }
             }
 
             // Create ptree from nodes
