@@ -1,0 +1,34 @@
+# Copyright René Ferdinand Rivera Morell 2023
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+import project ;
+
+project /boost/property_tree
+    : common-requirements
+        <source>/boost/any//boost_any
+        <source>/boost/assert//boost_assert
+        <source>/boost/bind//boost_bind
+        <source>/boost/config//boost_config
+        <source>/boost/core//boost_core
+        <source>/boost/format//boost_format
+        <source>/boost/iterator//boost_iterator
+        <source>/boost/mpl//boost_mpl
+        <source>/boost/multi_index//boost_multi_index
+        <source>/boost/optional//boost_optional
+        <source>/boost/range//boost_range
+        <source>/boost/serialization//boost_serialization
+        <source>/boost/static_assert//boost_static_assert
+        <source>/boost/throw_exception//boost_throw_exception
+        <source>/boost/type_traits//boost_type_traits
+        <include>include
+    ;
+
+explicit
+    [ alias boost_property_tree ]
+    [ alias all : examples test ]
+    ;
+
+call-if : boost-library property_tree
+    ;
