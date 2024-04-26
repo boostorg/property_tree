@@ -8,4 +8,4 @@ exe debug_settings : debug_settings.cpp
     /boost/foreach//boost_foreach ;
 exe empty_ptree_trick : empty_ptree_trick.cpp ;
 exe info_grammar_spirit : info_grammar_spirit.cpp ;
-exe speed_test : speed_test.cpp ;
+exe speed_test : speed_test.cpp /boost/format//boost_format ;
