@@ -11,6 +11,7 @@ project /boost/property_tree
     : common-requirements
         <library>/boost/any//boost_any
         <library>/boost/assert//boost_assert
+        <library>/boost/bind//boost_bind
         <library>/boost/config//boost_config
         <library>/boost/core//boost_core
         <library>/boost/iterator//boost_iterator
