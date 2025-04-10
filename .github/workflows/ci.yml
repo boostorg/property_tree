@@ -145,23 +145,38 @@ jobs:
             container: ubuntu:23.10
             install: clang-17
           - toolset: clang
-            cxxstd: "11,14,17,2a"
-            os: macos-11
-          - toolset: clang
-            cxxstd: "11,14,17,20,2b"
-            os: macos-12
-          - toolset: clang
             cxxstd: "11,14,17,20,2b"
             os: macos-13
+          - toolset: clang
+            cxxstd: "11,14,17,20,2b"
+            os: macos-14
+          - toolset: clang
+            cxxstd: "11,14,17,20,23"
+            os: macos-15
 
     runs-on: ${{matrix.os}}
-    container: ${{matrix.container}}
+    container:
+      image: ${{ matrix.container }}
+      options: --privileged
+      volumes:
+        - /node20217:/node20217:rw,rshared
+        - ${{ startsWith(matrix.container, 'ubuntu:1') && '/node20217:/__e/node20:ro,rshared' || ' ' }}
+    timeout-minutes: 120
 
     defaults:
       run:
         shell: bash
 
     steps:
+      - name: install nodejs20glibc2.17
+        if: ${{ startsWith( matrix.container, 'ubuntu:1' ) }}
+        run: |
+          apt-get update
+          apt-get -yqq install xz-utils curl
+          curl -LO https://archives.boost.io/misc/node/node-v20.9.0-linux-x64-glibc-217.tar.xz
+          tar -xf node-v20.9.0-linux-x64-glibc-217.tar.xz --strip-components 1 -C /node20217
+          ldd /__e/node20/bin/node
+
       - uses: actions/checkout@v3
 
       - name: Setup container environment
@@ -275,9 +290,9 @@ jobs:
         include:
           - os: ubuntu-20.04
           - os: ubuntu-22.04
-          - os: macos-11
-          - os: macos-12
           - os: macos-13
+          - os: macos-14
+          - os: macos-15
 
     runs-on: ${{matrix.os}}
 
@@ -323,9 +338,9 @@ jobs:
         include:
           - os: ubuntu-20.04
           - os: ubuntu-22.04
-          - os: macos-11
-          - os: macos-12
           - os: macos-13
+          - os: macos-14
+          - os: macos-15
 
     runs-on: ${{matrix.os}}
 
@@ -381,9 +396,9 @@ jobs:
         include:
           - os: ubuntu-20.04
           - os: ubuntu-22.04
-          - os: macos-11
-          - os: macos-12
           - os: macos-13
+          - os: macos-14
+          - os: macos-15
 
     runs-on: ${{matrix.os}}
 
