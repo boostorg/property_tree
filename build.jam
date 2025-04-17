@@ -22,12 +22,11 @@ constant boost_dependencies :
     /boost/type_traits//boost_type_traits ;
 
 project /boost/property_tree
-    : common-requirements
-        <include>include
     ;
 
 explicit
-    [ alias boost_property_tree : : : : <library>$(boost_dependencies) ]
+    [ alias boost_property_tree : : :
+        : <include>include <library>$(boost_dependencies) ]
     [ alias all : examples test ]
     ;
 
