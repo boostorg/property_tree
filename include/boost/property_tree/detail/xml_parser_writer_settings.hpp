@@ -16,12 +16,12 @@
 
 namespace boost { namespace property_tree { namespace xml_parser
 {
-
+    
     // Naively convert narrow string to another character type
     template<class Str>
     Str widen(const char *text)
     {
-        typedef typename Str::value_type Ch;
+	typedef typename Str::value_type Ch;
         Str result;
         while (*text)
         {
@@ -35,28 +35,32 @@ namespace boost { namespace property_tree { namespace xml_parser
     template<class Str>
     class xml_writer_settings
     {
-        typedef typename Str::value_type Ch;
+	typedef typename Str::value_type Ch;
     public:
         xml_writer_settings(Ch inchar = Ch(' '),
                 typename Str::size_type incount = 0,
-                const Str &enc = widen<Str>("utf-8"))
+                const Str &enc = widen<Str>("utf-8"),
+                            bool attr_separate_line = false)
             : indent_char(inchar)
             , indent_count(incount)
             , encoding(enc)
+            , attr_separate_line(attr_separate_line)
         {
         }
 
         Ch indent_char;
         typename Str::size_type indent_count;
         Str encoding;
+        bool attr_separate_line;
     };
 
     template <class Str>
     xml_writer_settings<Str> xml_writer_make_settings(typename Str::value_type indent_char = (typename Str::value_type)(' '),
         typename Str::size_type indent_count = 0,
-        const Str &encoding = widen<Str>("utf-8"))
+        const Str &encoding = widen<Str>("utf-8"),
+        bool attr_separate_line = false)
     {
-        return xml_writer_settings<Str>(indent_char, indent_count, encoding);
+        return xml_writer_settings<Str>(indent_char, indent_count, encoding, attr_separate_line);
     }
 
 } } }
