@@ -26,7 +26,7 @@ project /boost/property_tree
 
 explicit
     [ alias boost_property_tree : : :
-        : <include>include <library>$(boost_dependencies) ]
+        : <include>include <library>$(boost_dependencies)/<warnings-as-errors>off ]
     [ alias all : examples test ]
     ;
 
