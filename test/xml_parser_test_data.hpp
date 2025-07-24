@@ -747,6 +747,13 @@ const char ok_data_5[] =
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" /*39 chars*/
     "<doc>\xC3\xA4</doc>";
 
+const char *ok_data_6 =
+    "<a>"
+    "<nullkey-3cb6534e-d358-4705-9e74-fee06453661e>"
+    "<b>c</b>"
+    "</nullkey-3cb6534e-d358-4705-9e74-fee06453661e>"
+    "</a>";
+
 // Erroneous
 const char *error_data_1 = 
     "a";      // bogus character
