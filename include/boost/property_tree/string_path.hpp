@@ -128,6 +128,8 @@ namespace boost { namespace property_tree
         std::string dump() const {
             return detail::dump_sequence(m_value);
         }
+        
+        const String& to_str() const { return m_value; }
 
         /// Concatenates two path components
         friend string_path operator /(string_path p1, const string_path &p2)
