@@ -92,6 +92,18 @@ namespace boost { namespace property_tree { namespace xml_parser
         typedef typename Ptree::key_type::value_type Ch;
         using namespace detail::rapidxml;
 
+        // Validate that the stream is good
+        // because peek in the next validation step otherwise could produce UB        
+        if (!stream.good())
+            BOOST_PROPERTY_TREE_THROW(
+                xml_parser_error("bad istream reference", filename, 0));
+
+        // Validate that the stream is initialized and not empty before reading
+        // so address sanitizer produces no error
+        if (stream.peek() == std::char_traits<typename Ptree::key_type::value_type>::eof())
+            BOOST_PROPERTY_TREE_THROW(
+                xml_parser_error("uninitialized or empty istream reference", filename, 0));
+
         // Load data into vector
         stream.unsetf(std::ios::skipws);
         std::vector<Ch> v(std::istreambuf_iterator<Ch>(stream.rdbuf()),
