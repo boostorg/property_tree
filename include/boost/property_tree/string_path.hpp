@@ -24,6 +24,9 @@
 #include <algorithm>
 #include <string>
 #include <iterator>
+#if __cplusplus >= 201703L
+#include <string_view>
+#endif
 
 namespace boost { namespace property_tree
 {
@@ -49,6 +52,25 @@ namespace boost { namespace property_tree
             it = s.begin() + idx;
         }
 
+
+
+#if __cplusplus >= 201703L
+        template <typename Sequence>
+        inline std::string dump_sequence(const Sequence &)
+        {
+            return "<undumpable sequence>";
+        }
+        inline std::string dump_sequence(std::string_view s)
+        {
+            return std::string(s);
+        }
+#ifndef BOOST_NO_STD_WSTRING
+        inline std::string dump_sequence(std::wstring_view s)
+        {
+            return narrow<std::string>(s.data());
+        }
+#endif
+#else
         template <typename Sequence>
         inline std::string dump_sequence(const Sequence &)
         {
@@ -63,6 +85,7 @@ namespace boost { namespace property_tree
         {
             return narrow<std::string>(s.c_str());
         }
+#endif
 #endif
     }
 
@@ -86,9 +109,22 @@ namespace boost { namespace property_tree
     public:
         typedef typename Translator::external_type key_type;
         typedef typename String::value_type char_type;
+#if __cplusplus >= 201703L
+        typedef typename std::basic_string_view<char_type> strview_type;
+#endif 
 
         /// Create an empty path.
         explicit string_path(char_type separator = char_type('.'));
+#if __cplusplus >= 201703L
+        /// Create a path by parsing the given string.
+        /// @param value A sequence, possibly with separators, that describes
+        ///              the path, e.g. "one.two.three".
+        /// @param separator The separator used in parsing. Defaults to '.'.
+        /// @param tr The translator used by this path to convert the individual
+        ///           parts to keys.
+        string_path(strview_type value, char_type separator = char_type('.'),
+                    Translator tr = Translator());
+#else
         /// Create a path by parsing the given string.
         /// @param value A sequence, possibly with separators, that describes
         ///              the path, e.g. "one.two.three".
@@ -97,6 +133,7 @@ namespace boost { namespace property_tree
         ///           parts to keys.
         string_path(const String &value, char_type separator = char_type('.'),
                     Translator tr = Translator());
+#endif
         /// Create a path by parsing the given string.
         /// @param value A zero-terminated array of values. Only use if
         ///              zero-termination makes sense for your type, and your
@@ -128,6 +165,8 @@ namespace boost { namespace property_tree
         std::string dump() const {
             return detail::dump_sequence(m_value);
         }
+        
+        const String& to_str() const { return m_value; }
 
         /// Concatenates two path components
         friend string_path operator /(string_path p1, const string_path &p2)
@@ -173,6 +212,15 @@ namespace boost { namespace property_tree
         : m_separator(separator), m_start(m_value.begin())
     {}
 
+#if __cplusplus >= 201703L
+    template <typename String, typename Translator> inline
+    string_path<String, Translator>::string_path(strview_type value,
+                                                 char_type separator,
+                                                 Translator tr)
+        : m_value(value.data()), m_separator(separator),
+          m_tr(tr), m_start(m_value.begin())
+    {}
+#else
     template <typename String, typename Translator> inline
     string_path<String, Translator>::string_path(const String &value,
                                                  char_type separator,
@@ -180,6 +228,7 @@ namespace boost { namespace property_tree
         : m_value(value), m_separator(separator),
           m_tr(tr), m_start(m_value.begin())
     {}
+#endif
 
     template <typename String, typename Translator> inline
     string_path<String, Translator>::string_path(const char_type *value,
