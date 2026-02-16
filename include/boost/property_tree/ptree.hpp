@@ -492,10 +492,10 @@ namespace boost { namespace property_tree
 
     private:
         // Hold the data of this node
-        data_type m_data;
+        data_type m_data {};
         // Hold the children - this is a void* because we can't complete the
         // container type within the class.
-        void* m_children;
+        void* m_children {};
 
         // Getter tree-walk. Not const-safe! Gets the node the path refers to,
         // or null. Destroys p's value.
