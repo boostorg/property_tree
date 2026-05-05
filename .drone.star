@@ -9,7 +9,7 @@
 #
 #
 
-globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release'}
+globalenv={'B2_CI_VERSION': '1', 'ADD_UBUNTU_TOOLCHAIN_PPA': 'true', 'B2_VARIANT': 'release'}
 linuxglobalimage="cppalliance/droneubuntu1604:1"
 windowsglobalimage="cppalliance/dronevs2019"
 
